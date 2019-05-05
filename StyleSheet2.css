@@ -1,0 +1,187 @@
+html{
+    background-color: #efedee;
+}
+
+.wrapper{
+    width: auto;
+    margin: 0 auto;
+    max-width: 1200px;
+    background-color: white;
+}
+/*Header and Logo*/
+.logo{
+    margin-left: 10px;
+}
+.mainNav li {
+    display: inline;
+    padding: 5px;
+    margin-left: 5px;
+    float: left;
+    color: black;
+    position: relative;
+    left: -30px;
+    border-bottom: solid 3px gray;
+    border-top: solid 3px gray;
+}
+.sideNav li {  
+    position: relative;
+    top: -70px;
+    text-align: right;
+    list-style: none;
+    margin-right: 10px;
+}
+/*Main Page and Content*/
+/*Second Header*/
+.headerImage {
+    background: url(polygonBackground.jpg);
+    width: auto;
+    max-width: 1200px;
+    height: 400px;
+}
+.headerText {
+    position: relative;
+    top: 230px;
+    left: 10px;
+    background-color: black;
+    opacity: 0.5;
+    color: white;
+    width: 300px;
+    padding: 5px;
+    border-top-right-radius: 25px;
+}
+.h1 {
+    text-decoration: underline;
+}
+.h5 {
+    position: relative;
+    top: -20px;
+}
+.knowUs li{
+    list-style: none;
+    display: inline;
+    padding: 4px;
+    background-color: #999;
+    border-radius: 5px;
+    position: relative;
+    top: -20px;
+    left: 10px;
+}
+/*Side Nav Bar*/
+.bodyNavButtons {
+    float: right;
+    text-align: center;
+    position: relative;
+    top: -467px;
+    right: 0px;
+    background-color: white;
+    width: 160px;
+    margin-bottom: -450px;
+}
+.img {
+    float: right;
+}
+/*Table*/
+.tableTitle{
+    color: #3399f3;
+    font-size: 20px;
+}
+table, td, th {
+    border: 1px solid black;
+    border-bottom: 1px solid gray;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+th {
+    height: 50px;
+     
+}
+tbody td:hover {
+    box-shadow: 10px 10px 100px gray;
+}
+/*Footer*/
+footer {
+    border-top: solid 2px gray;
+    clear:both;
+}
+.noBullets {
+    list-style: none;
+}
+a {
+    color: green;
+}
+.contentBlock {
+    float: right;
+    margin-right: 10px;
+}
+.copyright {
+    clear: both;
+    position: relative;
+    top: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*clearfix*/
+.clearfix:before,
+.clearfix:after {
+content: " ";
+display: table;
+}
+
+.clearfix:after {
+clear: both;
+}
+
+/*
+* For IE 6/7 only
+* Include this rule to trigger hasLayout and contain floats.
+*/
+
+.clearfix {
+*zoom: 1;
+}
