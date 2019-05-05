@@ -1,169 +1,140 @@
 <!DOCTYPE html>
 <html>
-    <link rel="StyleSheet" href="StyleSheet.css">
-    <div class="wrapper">
-    <header>
-        <img class="logo" src="logo.jpg" />
-        <nav>
-            <ul class="mainNav">
-                <li>Home</li>
-                <li>Phone Services</li>
-                <li>Internet Access</li>
-                <li>Network Management</li>
-                <li>Services</li>
-                <li>Blog</li>
-            </ul>
-            <ul class="sideNav">
-                <li>Log in</li>
-                <a href="MainPage2.html"><li>Contact Us</li></a>
-            </ul>
-        </nav>
-    </header>
-    <div class="headerImage">
-        <div class="headerText">
-            <h1 class="h1">The IT Guys</h1>
-            <h5 class="h5">Get to know us better, and check us out on social media</h5>
-            <div class="knowUs">
-                <li>Login</li>
-                <li>Contact Us</li>
-            </div>
-        </div>
-    </div>
-    <body class="body">
-        <div class="body">
-            <div class="bodyHeader">
-                    <h2>Body Title Goes Here</h2>
-            </div>
-            <div class="mainContent">
-            <div class="bodyNavButtons">
-                 <div>
-                     <h2>Voice Service</h2>
-                     <img class="img2" src="voice_phone.png"/>
-                 </div>
-                 <div>
-                     <h2>Networking</h2>
-                      <img class="img2" src="networking.png"/>
-                 </div>
-                 <div>
-                     <h2>Internet Access</h2>
-                      <img class="img2" src="internet_access.png"/>
-                 </div>
-                 <div>
-                     <h2>Security</h2>
-                     <img class="img2" src="security.png"/>
-                 </div>
-                 <div>
-                     <h2>Cabling</h2>
-                     <img class="img2" src="cable_bw.png"/>
-                 </div>
-                 <div>
-                     <h2>Outside Plant</h2>
-                     <img class="img2" src="outside_plant.png"/>
-                 </div>
-            </div>
+    <body onload="onLoadBody()">
+        <link rel="StyleSheet" href="Stylesheet.css">
+        <script type="text/javascript" src="scrip.js"></script>
+        <script type="text/javascript" src="Functions.js"></script>
+        <script type="text/javascript" src="Label.js"></script>
+        
+
+        <p>Input: Enter you data below</p>
+        <textarea id="input" rows="4" cols="100"></textarea>
+        <p></p>
+        <button type="button" onclick="clearFeild('input')">Clear input</button>
+        <p>Output</p>
+        <textarea id="output" rows="4" cols="100"></textarea>
+        <p></p>
+        <button type="button" onclick="clearFeild('output')">Clear output</button>
+        <p></p>
+        <button type="button" onclick="copyToOutput()">Copy to output</button>
+        <button type="button" onclick="copyStringToClipboard('output')">Copy text</button>
+        <button type="button" onclick="print('a')">Add "a"</button>
+        <button type="button" onclick="printZpl('a')">Print</button>
+       
+        
+        
+        <script>
+        	var output = document.getElementById("output");
+            var input = document.getElementById("input");
             
-                <div class="text">
+        	function onLoadBody() {
+    			document.getElementById('output').readOnly = true;
+  			} 
+            
+            function copyToOutput(){
+                output.value = input.value;
+            }
+            
+            function copyStringToClipboard (str) {
+            	var copyText = document.getElementById(str);
+                copyText.select();
+                document.execCommand("copy");
+                alert("Copied the text: " + copyText.value);
+            }
+            
+            function print(n){
+                output.value = output.value + n;
+            }
+            function println(n){
+            	//var temp = document.getElementById("output");
+                //temp.value = "\n" temp.value + n;
+                output.value = "\n" + output.value + n;
+            }
+			
+            function clearFeild(area){
+            	document.getElementById(area).value = "";
+            }
+            
+            function getLast(){
+            	var html = document.getElementById('input').innerHTML.split('\n');
+				var n = html[html.length - 1];
+				print(n + "test");
+            }
+            
+            function printIRL(){
+            	window.print("Test");
+            }
+			
+            
+            //Key events
+            var input = document.getElementById("input");
+            input.addEventListener("keyup", function(event) {
+ 				if (event.keyCode === 13) {//Enter Key
+    				println('Enter Key was pressed:');
+                    getLast();
+                }
+			});
+            
+            
+            
+            
+            function test(){
+    			window.alert("Hello!!!");
+			}
+            
+             function PrintDoc() {
 
-    <!--            Content filling-->
-                    <p>
-                    Communications Etc offers the highest quality internet and phone service designed for today’s business needs and supported by qualified professionals.
-                    </p>
-                    </p>
-                    Want to reduce data charges on your family's smart phones? Growing demand for real-time online content has many paying for more data than they actually need. When at home, use
-                    </p>
-                    <img class="img clearfix" src="wireless-diagram.jpg"/>
-                    </p>
-                    Home Networking wireless connection to:
-                    </p>
-                    <ul>
-                        <li>Stream videos</li>
-                        <li>Make video calls</li>
-                        <li>Stream music</li>
-                        <li>Upload videos</li>
-                        <li>Play online games</li>
-                        <li>And much more!</li>
-                    </ul>
-                    <p class="clearfix">
-                    Many of these online services can use from 1Mb to 5MB per minute and may quickly use up the data allowed on your plan. Home Networking's secure wireless connection can help save on data usage and monthly costs.
-                    </p>
-<!--                Table-->
-                    <p class="tableTitle">Internet Access Plans</p>
-                    <table>
-                        <tr>
-                            <th>Basic Access</th>
-                            <th>Premium</th>
-                        </tr>
-                        <tr>
-                            <td>$30.00/mo</td>
-                            <td>$50.00 /mo</td>
-                        </tr>
-                        <tr>
-                            <td>Up to 5 Mbps Down</td>
-                            <td>Up to 10 Mbps Down</td>
-                        </tr>
-                                                <tr>
-                            <td>Up to 1 Mbps Up	</td>
-                            <td>Up to 2 Mbps Up</td>
-                        </tr>
-                        <tr>
-                            <td>Unlimited Monthly usage</td>
-                            <td>Unlimited Monthly usage</td>
-                        </tr>
-                        <tr>
-                            <td>$150.00 Installation Fee</td>
-                            <td>$150.00 Installation Fee</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Great for web browsing, social networking, email, shopping, music and light video streaming.
-                            </td>
-                            <td>
-                                Does everything the 5MBit package will do plus multiple video streams and is great for light gaming!
-                            </td>
-                        </tr>
-                         <tr>
-                            <td>Add Digital Phone for only 27.99</td>
-                            <td>Add Digital Phone for only 27.99</td>
-                        </tr>
-        
-        
-                    </table>
-        
-        
-        
-        
-        
-        
-                </div>
-            </div>
+        var toPrint = document.getElementById('testDiv');
+
+        //var popupWin = window.open('', '_blank', 'width=350,height=150,location=no,left=200px');
+	var popupWin = window.open("about:blank", "", "_blank");
+        //popupWin.document.open();
+
+        //popupWin.document.write('<html><title>::Preview::</title><link rel="stylesheet" type="text/css" href="print.css" /></head><body onload="window.print()">')
+
+        popupWin.document.write(toPrint.value);
+
+        popupWin.document.write('</html>');
+
+        popupWin.document.close();
+        //popupWin.close();
+
+    }
+    
+    function printZpl(zpl) {
+  var printWindow = window.open();
+  printWindow.document.open('text/plain')
+  printWindow.document.write('${^XA^FO50,100^BXN,10,200^FDYourTextHere^FS^XZ}$');
+  printWindow.document.close();
+  printWindow.focus();
+  printWindow.print();
+  //printWindow.close();
+}
+
+  function openWin() {
+    var printWindow = window.open();
+    printWindow.document.open('text/plain')
+    printWindow.document.write('${^XA^FO50,100^BXN,10,200^FDYourTextHere^FS^XZ}$');
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+  }
+    
+
+            
+  
+
+        </script>
+       
+        <!--
+        <div class="tooltip">
+            <button onclick="copyStringToClipboard("input")">Copy text
+                <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+            </button>
         </div>
+        -->
+
+
+        
     </body>
-    <footer class="clearfix">
-        This is the Footer
-        <div class="contentBlock">
-            <h3>Follow us, we are social</h3>
-            <ul>
-                <li><a href="#">FaceBook</a></li>
-                <li><a href="#">Twitter</a></li>
-                <li><a href="#">Google+</a></li>
-                <li><a href="#">Linkedin</a></li>
-            </ul>
-        </div>
-        <div class="contentBlock">
-            <h3>Communications Etc</h3>
-            <ul class="noBullets">
-                <li>2325 Old Eola Rd</li>
-                <li>San Angelo, Tx 76905</li>
-                <li>325-658-7484 </li>
-                <li><a href="#">info@communications-etc.com</a></li>
-            </ul>
-        </div>
-        <div class="copyright">Copyright © 2016 The IT Guys / All rights reserved.</div>
-        
-
- 
-
- 
-    </footer>
-    </div>
 </html>
