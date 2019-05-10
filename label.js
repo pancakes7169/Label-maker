@@ -89,7 +89,7 @@ function label(n) {
     
     this.customExtract = function(n,pram1,pram2){
         if (!n.includes(pram1)) {return "";}
-        var index1 = n.indexOf(pram1) + pram1.length;
+        var index1 = n.indexOf(pram1) + 1; // pram1.length;
         var index2 = n.indexOf(pram2,index1+1);
         if (index1 != -1 && index2 != -1)
             return n.substring(index1,index2);
