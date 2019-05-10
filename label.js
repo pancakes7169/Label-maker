@@ -40,6 +40,7 @@ function label(n) {
                             t = d
                         if(d == "" && t != "")
                             d = t
+                this.correctPrefix();
             }//Custom
             if (intProfile == 2) {//Bortech
                 
@@ -58,8 +59,8 @@ function label(n) {
             
             }
         
-        correctPrefix();
-        
+        this.correctPrefix();
+         console.log("MadeLabel");
     };
     
     this.correctPrefix = function(){
