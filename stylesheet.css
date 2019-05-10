@@ -28,9 +28,7 @@ h2 {
 textarea {
   width: 95%;
   height: auto;
-  white-space:nowrap;
-  overflow:auto;
-  overflow-x: scroll;
+
 
 }
 
