@@ -28,6 +28,10 @@ h2 {
 textarea {
   width: 95%;
   height: auto;
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: scroll;
+
 }
 
 
