@@ -7,6 +7,15 @@ function label(n) {
     var q = "";
     var v = "";
     
+    this.correctPrefix = function(){
+        console.log("CorrectPrefixCalled");
+        if(!n.startsWith("P")  && p != "") p = "P" + p;
+        if(!n.startsWith("1T") && t != "") t = "1T" + t;
+        if(!n.startsWith("9D") && d != "") d = "9D" + d;
+        if(!n.startsWith("Q")  && q != "") q = "Q" + q;
+        if(!n.startsWith("V")  && v != "") v = "V" + v;
+    };
+    
     this.formatLabel = function(n){
         var intProfile = document.getElementById("profile").value;
         if (true){
@@ -40,7 +49,6 @@ function label(n) {
                             t = d
                         if(d == "" && t != "")
                             d = t
-                this.correctPrefix();
             }//Custom
             if (intProfile == 2) {//Bortech
                 
@@ -60,17 +68,10 @@ function label(n) {
             }
         
         this.correctPrefix();
-         console.log("MadeLabel");
+
     };
     
-    this.correctPrefix = function(){
-        console.log("CorrectPrefixCalled");
-        if(!n.startsWith("P")  && p != "") p = "P" + p;
-        if(!n.startsWith("1T") && t != "") t = "1T" + t;
-        if(!n.startsWith("9D") && d != "") d = "9D" + d;
-        if(!n.startsWith("Q")  && q != "") q = "Q" + q;
-        if(!n.startsWith("V")  && v != "") v = "V" + v;
-    };
+    
     
     this.gV = function(n){
         return document.getElementById(n).value
