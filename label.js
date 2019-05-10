@@ -70,11 +70,11 @@ function label(n) {
         if(!n.startsWith("9D") && d != "") d = "9D" + d;
         if(!n.startsWith("Q")  && q != "") q = "Q" + q;
         if(!n.startsWith("V")  && v != "") v = "V" + v;
-    }
+    };
     
     this.gV = function(n){
         return document.getElementById(n).value
-    }
+    };
     
     this.extract = function(n,pram){
         if (!n.includes(pram)) {return "";}
