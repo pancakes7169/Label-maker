@@ -1,140 +1,182 @@
 <!DOCTYPE html>
 <html>
-    <body onload="onLoadBody()">
-        <link rel="StyleSheet" href="Stylesheet.css">
-        <script type="text/javascript" src="scrip.js"></script>
-        <script type="text/javascript" src="Functions.js"></script>
-        <script type="text/javascript" src="Label.js"></script>
-        
-
-        <p>Input: Enter you data below</p>
-        <textarea id="input" rows="4" cols="100"></textarea>
-        <p></p>
-        <button type="button" onclick="clearFeild('input')">Clear input</button>
-        <p>Output</p>
-        <textarea id="output" rows="4" cols="100"></textarea>
-        <p></p>
-        <button type="button" onclick="clearFeild('output')">Clear output</button>
-        <p></p>
-        <button type="button" onclick="copyToOutput()">Copy to output</button>
-        <button type="button" onclick="copyStringToClipboard('output')">Copy text</button>
-        <button type="button" onclick="print('a')">Add "a"</button>
-        <button type="button" onclick="printZpl('a')">Print</button>
-       
-        
-        
-        <script>
-        	var output = document.getElementById("output");
-            var input = document.getElementById("input");
-            
-        	function onLoadBody() {
-    			document.getElementById('output').readOnly = true;
-  			} 
-            
-            function copyToOutput(){
-                output.value = input.value;
-            }
-            
-            function copyStringToClipboard (str) {
-            	var copyText = document.getElementById(str);
-                copyText.select();
-                document.execCommand("copy");
-                alert("Copied the text: " + copyText.value);
-            }
-            
-            function print(n){
-                output.value = output.value + n;
-            }
-            function println(n){
-            	//var temp = document.getElementById("output");
-                //temp.value = "\n" temp.value + n;
-                output.value = "\n" + output.value + n;
-            }
-			
-            function clearFeild(area){
-            	document.getElementById(area).value = "";
-            }
-            
-            function getLast(){
-            	var html = document.getElementById('input').innerHTML.split('\n');
-				var n = html[html.length - 1];
-				print(n + "test");
-            }
-            
-            function printIRL(){
-            	window.print("Test");
-            }
-			
-            
-            //Key events
-            var input = document.getElementById("input");
-            input.addEventListener("keyup", function(event) {
- 				if (event.keyCode === 13) {//Enter Key
-    				println('Enter Key was pressed:');
-                    getLast();
-                }
-			});
-            
-            
-            
-            
-            function test(){
-    			window.alert("Hello!!!");
-			}
-            
-             function PrintDoc() {
-
-        var toPrint = document.getElementById('testDiv');
-
-        //var popupWin = window.open('', '_blank', 'width=350,height=150,location=no,left=200px');
-	var popupWin = window.open("about:blank", "", "_blank");
-        //popupWin.document.open();
-
-        //popupWin.document.write('<html><title>::Preview::</title><link rel="stylesheet" type="text/css" href="print.css" /></head><body onload="window.print()">')
-
-        popupWin.document.write(toPrint.value);
-
-        popupWin.document.write('</html>');
-
-        popupWin.document.close();
-        //popupWin.close();
-
-    }
-    
-    function printZpl(zpl) {
-  var printWindow = window.open();
-  printWindow.document.open('text/plain')
-  printWindow.document.write('${^XA^FO50,100^BXN,10,200^FDYourTextHere^FS^XZ}$');
-  printWindow.document.close();
-  printWindow.focus();
-  printWindow.print();
-  //printWindow.close();
-}
-
-  function openWin() {
-    var printWindow = window.open();
-    printWindow.document.open('text/plain')
-    printWindow.document.write('${^XA^FO50,100^BXN,10,200^FDYourTextHere^FS^XZ}$');
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
-  }
-    
-
-            
-  
-
-        </script>
-       
-        <!--
-        <div class="tooltip">
-            <button onclick="copyStringToClipboard("input")">Copy text
-                <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
-            </button>
+    <link rel="StyleSheet" href="stylesheet.css">
+    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="label.js"></script>
+    <script type="text/javascript" src="functions.js"></script>
+    <div class="wrapper">
+    <header>
+        <nav>
+            <ul class="mainNav">
+                <li>reload</li>
+                <li>Chagne user</li>
+            </ul>
+            <ul class="sideNav">
+                <li>Undefined User</li>
+                <li>00000</li>
+                <!--<a href="MainPage2.html"><li>Contact Us</li></a>-->
+            </ul>
+        </nav>
+    </header>
+    <div class="headerImage">
+        <div class="headerText">
+            <h1 class="h1">Traceability lable maker</h1>
+            <h5 class="h5">Questiongs on how to use the program please click the link below.</h5>
+            <div class="knowUs">
+                <li>How to use</li>
+                <li>Report an issue</li>
+            </div>
         </div>
-        -->
+    </div>
+    <body onload="onLoadBody()" class="body">
+        <div class="body">
+            <div class="bodyHeader">
+                <h2>Console</h2>
+            </div>
+            <div class="mainContent clearfix">
+                <div class="split left">
+                    <textarea id="help" rows="1" cols="90">    [Use '/h' for help]</textarea>
+                    <textarea id="output" rows="20" cols="85"></textarea>
+                    <button type="button" onclick="clearOutput()">Clear output</button>
+                    <br /><br />
+                    <!--<textarea id="input"  rows="1" cols="100"></textarea>-->
+                    <label>Input:</label>
+                    <input id="input" cols = "100" autofocus>
+                    <label>Select Profile:</label>
+                    <select id="profile">
+                        <option value="0">Default</option>
+                        <option value="1">Custom</option>
+                        <option value="2">Null</option>
+                        <option value="3">Null</option>
+                    </select>
+                    <br /><br />
+                    <button type="button" onclick="enterData()">Enter data to dataBase</button>
+                    <button type="button" onclick="convertToZPL()">Format ZPL</button>
+                    <button type="button" onclick="CreateLabelsAndconvertToZPL()">Enter and format</button>
+                    <br /><br />
+                    <label>Testing fuctions:</label>
+                    <button type="button" onclick="printZpl('a')">Print</button>
+                    <button type="button" onclick="loadFileAsText()">Open File</button>
+                    
+                    <button type="button" onclick="testFuction()">test</button>
 
+        
+                    <br /><br />
+                    <label>DateBase:</label>
+                    <input id="dataBaseCounter" cols = "100">
+                    <button type="button" onclick="claerDatabase()">Clear database</button>
+                    <textarea id="zplOutput" rows="20" cols="90"></textarea>
+                    <p></p>
+                    <button type="button" onclick="copyStringToClipboard()">Copy to clipboard</button>
+                    <p></p>
+                    
+                    <label>Dont Press</label>
+                    <tr>
+                        <td>Select a File to Load:</td>
+                        <td><input type="file" id="fileToLoad"></td>
+                        <td><button onclick="loadFileAsText()">Load Selected File</button><td>
+                    </tr>
+                </div>
+                <div class="split right">
+                    <textarea id="help" rows="1" cols="90">Advanced Options</textarea>
+                    <div class="makeSingleLabel">
+                        <p>Make Single Label</p>
+                        
+                        
+                        <div class="center">
+                            <label>Input: </label>
+                            <input id="singelInput" cols = "10">
+                            <button type="button" id ="leftScroll" onclick="leftOne()">left</button>
+                            <label>Label:</label>
+                            <input id="scroll" cols = "10" value="0">
+                            <button type="button" id ="rightScroll" onclick="rightOne()">Right</button>
+                        </div>
+                        <div>
+                            <br />
+                            <label>P :</label> <input id="pSL"><br />
+                            <label>1T:</label> <input id="tSL"><br />
+                            <label>9D:</label> <input id="dSL"><br />
+                            <label>Q :</label> <input id="qSL"> <br />
+                            <label>V :</label> <input id="vSL">  <br />
+                            <br />
+                            <button type="button" onclick="clearSingeLabelFeilds()">Clear</button>
+                            <button type="button" onclick="printSingleLabel()">Make single Label</button>
+                        </div>
+                    </div>
+                    <div class="customLable">
+                        <p>Custom Label autibutes</p>
+                        <label>P :</label> <input id="p" value="@P"> <input id="p2"  value="@"><br />
+                        <label>1T:</label> <input id="t" value="@1T">  <input id="t2" value="@"> <input type="checkbox" id="use1tMult"> 
+                        <input id="2t" value="@2T"> <input id="2t2" value="@"><br />
+                        <label>9D:</label> <input id="d" value="@9D">  <input id="d2" value="@"> <input type="checkbox" id="use9dMult"> 
+                        <input id="2d" value="@9D">  <input id="2d2" value="@"><br />
+                        <label>Q :</label> <input id="q" value="@Q">   <input id="q2" value="@"><br />
+                        <label>V :</label> <input id="v" value="@V">   <input id="v2" value="@"><br />
+                        <br />
+                        <button type="button" onclick="resetCustomLabel()">Reset</button>
+                        <input type="checkbox" id="copy1t9d"> 
+                        <label>1t and 9d are the same</label>
+                    </div>
+                    <div class="otherOptions">
+                        <p>Other Options</p>
+                        <label>Username:</label>
+                        <input id="username" value="">
+                        <br><br>
+                        <select id="feild">
+                            <option value="p">P</option>
+                            <option value="1t">1T</option>
+                            <option value="9d">9D</option>
+                            <option value="q">Q</option>
+                            <option value="v">V</option>
+                        </select>
+                        <input id="change" value="">
+                        <button type="button" onclick="changeAll()">Chagne All</button>
+                    </div>
 
+                    
+                    
+                </div>
+                
+                
+                
+       
+            
+            
+            </div>
+            <div class="bodyHeader"></div>
+        </div>
         
     </body>
+    <footer class="clearfix">
+        <div class="contentBlock">
+            <h3>Contiental USA</h3>
+            <ul class="noBullets">
+                <li>3740 N Austin St, </li>
+                <li>Seguin, TX 78155</li>
+            </ul>
+        </div>
+        <div class="copyright">Label Maker made by 'PanCaeks7169'</div>
+        
+
+ 
+
+ 
+    </footer>
+    </div>
+    <script>
+        //Key Events
+        var input = document.getElementById("input");
+        input.addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                enterKeyPressOnMainInput();
+            }
+        });
+        var input = document.getElementById("singelInput");
+        input.addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                enterKeyPressOnSingleInput();
+            }
+        });
+    </script>
+    
 </html>
