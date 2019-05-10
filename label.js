@@ -8,7 +8,7 @@ function label(n) {
     var v = "";
     
     this.correctPrefix = function(){
-        console.log("CorrectPrefixCalled");
+        console.log("CorrectPrefixCalledv2");
         if(!n.startsWith("P")  && p != "") p = "P" + p;
         if(!n.startsWith("1T") && t != "") t = "1T" + t;
         if(!n.startsWith("9D") && d != "") d = "9D" + d;
