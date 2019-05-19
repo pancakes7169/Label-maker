@@ -10,8 +10,8 @@ function checkBage(n){
             localStorage.setItem("bageNum" , users[i][0]);
             localStorage.setItem("user"    , users[i][1]);
             
-           window.open("home.html", "_self"); 
-            window.close();
+            window.open("home.html", "_self"); 
+            i = users.length;
         }else{
             document.getElementById('status').innerHTML = "Invalid Login!!"
         }
