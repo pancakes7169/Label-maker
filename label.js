@@ -30,8 +30,10 @@ function label(n) {
                 p = this.customExtract(n,this.gV("p"),this.gV("p2"));
                 t = this.customExtract(n,this.gV("t"),this.gV("t2"));
                 if (use1tMult.checked == true)
-                    if (this.customExtract(n,this.gV("2t"),this.gV("2t2")).length > 2)
+                    if (this.customExtract(n,this.gV("2t"),this.gV("2t2")).length > 2){
                         t = "1TMULT";
+                        console.log(this.customExtract(n,this.gV("2t"),this.gV("2t2")));
+                    }
                 d = this.customExtract(n,this.gV("d"),this.gV("d2"));
                     if (this.customExtract(n,this.gV("2d"),this.gV("2d2")).length > 2)
                         d = "9DMULT";
