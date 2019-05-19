@@ -108,7 +108,7 @@ function diplayLabelData(i,temp){
     document.getElementById("qSL").value = labelData[i].getQ();
     document.getElementById("vSL").value = labelData[i].getV();
     
-    document.getElementById("SideV").value = SearchVerderList(labelData[i].getV());
+    //document.getElementById("SideV").value = SearchVerderList(labelData[i].getV());
     updateScrollButtons();
 }
 
@@ -163,7 +163,6 @@ function searchWeights(){
     for (var i = 0; i < weightList.length; i++){
             if (parseInt(weightList[i][1]) == n.substr(1,n.length)){
                 temp = getFormatedWeight(i);
-                console.log(weightList[i][0]);
                 i++;
                 while(weightList[i][0] == "1" && i < weightList.length-1){
                     if (parseInt(weightList[i][1]) == n.substr(1,n.length)){
@@ -189,7 +188,7 @@ function upadateSideVender(){
     }else{
         sideV.innerHTML = "|";
     }
-    cutoff(sideQ);   
+    cutoff(sideV);   
 }
 
 function searchVerderList(){
@@ -205,14 +204,12 @@ function searchVerderList(){
 function cutoff(feild){
     var width = window.innerWidth;
     var cutOffLenth = 0;
+    feild.title = feild.innerHTML;
     if (width < 1000)
         cutOffLenth = 5;
     else 
         cutOffLenth = 17;
-    console.log("W: "  + width + " C: " + cutOffLenth);
-    console.log("Lenght: " + feild.innerHTML.length)
     if (feild.innerHTML.length > cutOffLenth){
-        feild.title = feild.innerHTML;
         feild.innerHTML = feild.innerHTML.substr(0,cutOffLenth) + "...";
     } 
 }
@@ -221,7 +218,7 @@ function cutoff(feild){
 
 
 
-
+ 
 
 function extractedDataFromSinleLabel(){
     var str = document.getElementById("singelInput");
@@ -246,21 +243,41 @@ function extractedDataFromSinleLabel(){
     }
     //Take in individual feilds
     //------------------------------------------------------------
-    n = n.toLowerCase();
-    if (n.startsWith("p")){
-        document.getElementById("pSL").value = correctPartNum(n.toUpperCase());
-    }
-    if (n.startsWith("1t")){
-        document.getElementById("tSL").value = n.toUpperCase();
-    }
-    if (n.startsWith("9d")){
-        document.getElementById("dSL").value = n.toUpperCase();
-    }
-    if (n.startsWith("q")){
-        document.getElementById("qSL").value = n.toUpperCase();
-    }
-    if (n.startsWith("v")){
-        document.getElementById("vSL").value = n.toUpperCase();
+    var intProfile = document.getElementById("profile").value;
+    if (intProfile == 0){
+        n = n.toLowerCase();
+        if (n.startsWith("p")){
+            document.getElementById("pSL").value = n.toUpperCase();
+        }
+        if (n.startsWith("1t")){
+            document.getElementById("tSL").value = n.toUpperCase();
+        }
+        if (n.startsWith("9d")){
+            document.getElementById("dSL").value = n.toUpperCase();
+        }
+        if (n.startsWith("q")){
+            document.getElementById("qSL").value = n.toUpperCase();
+        }
+        if (n.startsWith("v")){
+            document.getElementById("vSL").value = n.toUpperCase();
+        }
+    }else if (intProfile == 1){
+        if (n.startsWith(document.getElementById('p').value.toLowerCase())){
+            document.getElementById("pSL").value = correctPartNum(n.toUpperCase());
+        }
+        if (n.startsWith(document.getElementById('t').value.toLowerCase())){
+            document.getElementById("tSL").value = n.toUpperCase();
+        }
+        if (n.startsWith(document.getElementById('d').value.toLowerCase())){
+            document.getElementById("dSL").value = n.toUpperCase();
+        }
+        if (n.startsWith(document.getElementById('q').value.toLowerCase())){
+            document.getElementById("qSL").value = n.toUpperCase();
+        }
+        if (n.startsWith(document.getElementById('v').value.toLowerCase())){
+            document.getElementById("vSL").value = n.toUpperCase();
+        } 
+        console.log(document.getElementById('p').value.toLowerCase());
     }
     str.value = "";
     //Save it back to single label
@@ -268,13 +285,17 @@ function extractedDataFromSinleLabel(){
     setSingleLabel();
 }
 
+function get(n){
+        return document.getElementById(n).value
+    }
+
 function setSingleLabel(){
     singleLabel = new label();
     singleLabel.setP(document.getElementById("pSL").value);
     singleLabel.setT(document.getElementById("tSL").value);
     singleLabel.setD(document.getElementById("dSL").value);
     singleLabel.setQ(document.getElementById("qSL").value);
-    singleLabel.setV(document.getElementById("tSL").value);
+    singleLabel.setV(document.getElementById("vSL").value);
 }
 
 function printSingleLabel(){
@@ -297,13 +318,13 @@ function printSingleLabel(){
 
 function addLabel(){
     print("[)>@");
-    if (singleLabel != null){
+    //if (singleLabel != null){
         print(singleLabel.getP() + "@");
         print(singleLabel.getT() + "@");
         print(singleLabel.getD() + "@");
         print(singleLabel.getQ() + "@");
         print(singleLabel.getV() + "@");  
-    }
+    //}
     print("@");
     println("");
 }

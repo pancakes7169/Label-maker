@@ -10,6 +10,9 @@ function label(n) {
     
     this.formatLabel = function(n){
         var intProfile = document.getElementById("profile").value;
+        if (n == null || n == ""){
+            n = "a";
+        }
         if (true){
             if (intProfile == 0) {//Defalt
                 n = n.toUpperCase();
