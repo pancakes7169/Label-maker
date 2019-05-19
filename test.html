@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <script type="text/javascript" src="data.js"></script>
+    <style>
+    
+    </style>
+<head>
+<title>Table of Phone Numbers</title>
+
+</head>
+<body>
+    
+
+
+    
+    
+    
+    
+    
+<form onSubmit="WriteToFile(this)">
+<label>Type your first name:</label>
+<input type="text" name="FirstName" id="firstName" size="20">
+ 
+<label>Type your last name: </abel>
+<input type="text" name="LastName" id="lastName" size="20">
+ 
+<input type="submit" value="submit">
+</form>
+    
+    
+         <script>
+      function WriteToFile() {
+ 
+    var fso = CreateObject("Scripting.FileSystemObject");  
+    var s   = fso.CreateTextFile("C:/Users/joint/Desktop/filename.txt", True);
+ 
+ 
+    s.writeline("First Name :" );
+    s.writeline("Last Name :" );
+ 
+    s.writeline("-----------------------------");
+    s.Close();
+          
+         
+ }
+             
+              WriteToFile();
+             
+             
+             window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+var fs = null;
+
+window.requestFileSystem(window.TEMPORARY, 1024 * 1024, function (filesystem) {
+    fs = filesystem;
+}, errorHandler);
+
+fs.root.getFile('Hello.txt', {
+    create: true
+}, null, errorHandler);
+
+function errorHandler(e) {
+  var msg = '';
+
+  switch (e.code) {
+    case FileError.QUOTA_EXCEEDED_ERR:
+      msg = 'QUOTA_EXCEEDED_ERR';
+      break;
+    case FileError.NOT_FOUND_ERR:
+      msg = 'NOT_FOUND_ERR';
+      break;
+    case FileError.SECURITY_ERR:
+      msg = 'SECURITY_ERR';
+      break;
+    case FileError.INVALID_MODIFICATION_ERR:
+      msg = 'INVALID_MODIFICATION_ERR';
+      break;
+    case FileError.INVALID_STATE_ERR:
+      msg = 'INVALID_STATE_ERR';
+      break;
+    default:
+      msg = 'Unknown Error';
+      break;
+  };
+
+  console.log('Error: ' + msg);
+}
+    </script>
+    
+   
+
+</body>
+</html>

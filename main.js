@@ -4,30 +4,18 @@ var intProfile = 0;
 //var dataBase = [1];
 var labelData = new Array();
 var singleLabel;
-
+//-----------------------------------------------------------------------------------
+//Comand Line stuff
 function runCommand(n){
    //localStorage.lastname = n;
 
-    
- 
-    //Entering Data
-    //println("${^XA ^Fx");
-    console.log("Profile: " + intProfile);
     n.toLowerCase();
     if (n.startsWith("/")){
         switch (n.substring(0,2)){
             case "/h" : helpCommand(); break;
-            case "/d" : enterData(); break;
-            case "/z" : convertToZPL(n); break;
-                
-            /*case "/d" : LinkedList tempList = enterData(input); 
-                        dataBase = new String[tempList.size()];
-                        for (int i = 0; i < dataBase.length; i++){
-                            dataBase[i] = (String)(tempList.get(i));
-                        }
-                        labelData = convertToLabels(dataBase);
-                        break;
-            case "/a" : println("pa"); printArray(dataBase); break;
+            //case "/d" : enterData(); break;
+            //case "/z" : convertToZPL(n); break;
+            /*case "/a" : println("pa"); printArray(dataBase); break;
             case "/l" : printLabel(labelData); break;
             case "/z" : convertToZPL(input, labelData,n); break;
             case "/c" : changeAll(labelData,n); break;
@@ -37,11 +25,7 @@ function runCommand(n){
                         for (int i = 0; i < dataBase.length; i++){
                             dataBase[i] = (String)(tempList2.get(i));
                         }
-                        labelData = convertToLabels(dataBase);
-*/
-
-
-
+                        labelData = convertToLabels(dataBase);*/
             default : System.err.println("Error: UnknownCommand"); 
         }
     }else{
@@ -49,12 +33,26 @@ function runCommand(n){
     }
     output.scrollTop = output.scrollHeight;
 }
+
+function helpCommand(){
+    println("----------------------------------");
+    println("Warning: Command  line has been disabled");
+    println("----------------------------------");
+    println("[List of commands]----------------");
+    println("/p : Profile, select a label profile.");
+    println("/d : Enter new data");
+    println("/a : Prints out the contents of the array");
+    println("/l : Prints out the contents of the label dataBase");
+    println("/z : Fomats the the ZPL output");
+    println("/a : Changes the contents of that feild");
+    println("/s : SubStrings the given feild");
+    println("/q : Takes in ints | 0 restarts program, 1 clears console");
+    println("----------------------------------");
+    println("Warning: Command  line has been disabled");
+    println("----------------------------------");   
+}
 //-----------------------------------------------------------------------------------
-
-
-
-
-//-----------------------------------------------------------------------------------
+//Data base formatting 
 function enterData(){
     var n = output.value.split("\n");
     for (var i = 0; i < n.length; i++){
@@ -86,9 +84,6 @@ function convertToZPL(){
     zplOutput.value = temp;
 }
 
-
-
-
 function CreateLabelsAndconvertToZPL(){
     enterData();
     convertToZPL();
@@ -98,8 +93,11 @@ function claerDatabase(){
     labelData =[];
     dataBaseCounter.value = labelData.length + " Lables";
     zplOutput.value = "";
+    clearSingeLabelFeilds();
 }
 
+
+//-----------------------------------------------------------------------------------
 function diplayLabelData(i,temp){
     scroll.value = i;
     if (temp != -1)
@@ -109,6 +107,8 @@ function diplayLabelData(i,temp){
     document.getElementById("dSL").value = labelData[i].getD();
     document.getElementById("qSL").value = labelData[i].getQ();
     document.getElementById("vSL").value = labelData[i].getV();
+    
+    document.getElementById("SideV").value = SearchVerderList(labelData[i].getV());
     updateScrollButtons();
 }
 
@@ -120,44 +120,161 @@ function savePreivousLabel(i){
     labelData[i].setV(document.getElementById("vSL").value);
 }
 
-function helpCommand(){
-    println("----------------------------------");
-    println("Warning: Comand line has been disabled");
-    println("----------------------------------");
-    println("[List of commands]----------------");
-    println("/p : Profile, select a label profile.");
-    println("/d : Enter new data");
-    println("/a : Prints out the contents of the array");
-    println("/l : Prints out the contents of the label dataBase");
-    println("/z : Fomats the the ZPL output");
-    println("/a : Changes the contents of that feild");
-    println("/s : SubStrings the given feild");
-    println("/q : Takes in ints | 0 restarts program, 1 clears console");
-    println("----------------------------------");
-    println("Warning: Comand line has been disabled");
-    println("----------------------------------");
-    
-        
-        
-    
-    
-    
+//Kanban, weight, and vender info
+//-----------------------------------------------------------------------------------
+function updateSidePartNum(){
+    var sideP = document.getElementById("SideP");
+    var sideQ = document.getElementById("SideQ");
+    var pSL   = document.getElementById("pSL").value;
+    if (pSL.length == 14){
+        sideP.innerHTML = searchKanban();
+        updateSideQuanity();
+    }else{
+        sideP.innerHTML = "|";
+        sideQ.innerHTML = "|";
+    }
+    //---------------------------------------
+    cutoff(sideP);
 }
 
-function createSingleLabel(){
-    
+function searchKanban(){
+    var n = document.getElementById("pSL").value;
+    for (var i = 0; i < kanban.length; i++){
+            if (parseInt(kanban[i][0]) == n.substr(1,n.length)){
+                return "V:" + kanban[i][1] + " " + kanban[i][2];
+            }
+        }
+    return "Kanban not found"
 }
+
+function updateSideQuanity(){
+    var sideQ = document.getElementById("SideQ");
+    var pSL   = document.getElementById("pSL").value;
+    if (pSL.length == 14){
+        sideQ.innerHTML = searchWeights();
+    }
+    //---------------------------------------
+    cutoff(sideQ);
+}
+
+function searchWeights(){
+    var n = document.getElementById("pSL").value;
+    var temp = "";
+    for (var i = 0; i < weightList.length; i++){
+            if (parseInt(weightList[i][1]) == n.substr(1,n.length)){
+                temp = getFormatedWeight(i);
+                console.log(weightList[i][0]);
+                i++;
+                while(weightList[i][0] == "1" && i < weightList.length-1){
+                    if (parseInt(weightList[i][1]) == n.substr(1,n.length)){
+                        temp+= "\n" + getFormatedWeight(i);
+                    }
+                    i++;
+                }
+                return temp;
+            }
+        }
+    return "Weight not found"
+}
+
+function getFormatedWeight(i){
+    return "V:" + weightList[i][3] + " Q:" + weightList[i][2] + " " + weightList[i][4] + "Lbs";
+}
+
+function upadateSideVender(){
+    var sideV = document.getElementById("SideV");
+    var vSL   = document.getElementById("vSL").value;
+    if (vSL.length == 7){
+        sideV.innerHTML = searchVerderList();
+    }else{
+        sideV.innerHTML = "|";
+    }
+    cutoff(sideQ);   
+}
+
+function searchVerderList(){
+    var n = document.getElementById("vSL").value;
+    for (var i = 0; i < venderList.length; i++){
+            if (parseInt(venderList[i][1]) == n.substr(1,n.length)){
+                return venderList[i][2];
+            }
+        }
+    return "Vender not found"
+}
+
+function cutoff(feild){
+    var width = window.innerWidth;
+    var cutOffLenth = 0;
+    if (width < 1000)
+        cutOffLenth = 5;
+    else 
+        cutOffLenth = 17;
+    console.log("W: "  + width + " C: " + cutOffLenth);
+    console.log("Lenght: " + feild.innerHTML.length)
+    if (feild.innerHTML.length > cutOffLenth){
+        feild.title = feild.innerHTML;
+        feild.innerHTML = feild.innerHTML.substr(0,cutOffLenth) + "...";
+    } 
+}
+
+//-----------------------------------------------------------------------------------
+
+
+
+
 
 function extractedDataFromSinleLabel(){
-    var n = document.getElementById("singelInput");
-    singleLabel = new label(n.value);
-    n.value = "";
-    
-    document.getElementById("pSL").value = singleLabel.getP();
-    document.getElementById("tSL").value = singleLabel.getT();
-    document.getElementById("dSL").value = singleLabel.getD();
-    document.getElementById("qSL").value = singleLabel.getQ();
-    document.getElementById("vSL").value = singleLabel.getV();
+    var str = document.getElementById("singelInput");
+    var n = str.value;
+    singleLabel = new label(n);
+    //Try to get contents from master Label
+    //------------------------------------------------------------
+    if (singleLabel.getP() != ""){
+       document.getElementById("pSL").value = singleLabel.getP(); 
+    }
+    if (singleLabel.getT() != ""){
+       document.getElementById("tSL").value = singleLabel.getT();
+    }
+    if (singleLabel.getD() != ""){
+       document.getElementById("dSL").value = singleLabel.getD(); 
+    }
+    if (singleLabel.getQ() != ""){
+       document.getElementById("qSL").value = singleLabel.getQ(); 
+    }
+    if (singleLabel.getV() != ""){
+       document.getElementById("vSL").value = singleLabel.getV(); 
+    }
+    //Take in individual feilds
+    //------------------------------------------------------------
+    n = n.toLowerCase();
+    if (n.startsWith("p")){
+        document.getElementById("pSL").value = correctPartNum(n.toUpperCase());
+    }
+    if (n.startsWith("1t")){
+        document.getElementById("tSL").value = n.toUpperCase();
+    }
+    if (n.startsWith("9d")){
+        document.getElementById("dSL").value = n.toUpperCase();
+    }
+    if (n.startsWith("q")){
+        document.getElementById("qSL").value = n.toUpperCase();
+    }
+    if (n.startsWith("v")){
+        document.getElementById("vSL").value = n.toUpperCase();
+    }
+    str.value = "";
+    //Save it back to single label
+    //------------------------------------------------------------
+    setSingleLabel();
+}
+
+function setSingleLabel(){
+    singleLabel = new label();
+    singleLabel.setP(document.getElementById("pSL").value);
+    singleLabel.setT(document.getElementById("tSL").value);
+    singleLabel.setD(document.getElementById("dSL").value);
+    singleLabel.setQ(document.getElementById("qSL").value);
+    singleLabel.setV(document.getElementById("tSL").value);
 }
 
 function printSingleLabel(){
@@ -175,7 +292,20 @@ function printSingleLabel(){
     temp += singleLabel.formatZPL(username.value,0);
     temp += "\n}$";
     zplOutput.value = temp;
-    copyStringToClipboard();
+    //copyStringToClipboard();
+}
+
+function addLabel(){
+    print("[)>@");
+    if (singleLabel != null){
+        print(singleLabel.getP() + "@");
+        print(singleLabel.getT() + "@");
+        print(singleLabel.getD() + "@");
+        print(singleLabel.getQ() + "@");
+        print(singleLabel.getV() + "@");  
+    }
+    print("@");
+    println("");
 }
 
 function getUsername(){
@@ -231,255 +361,3 @@ function resetCustomLabel(){
     
 }
 
-
-
-
-
-
-
-
-
-
- /*   static public LinkedList<String> createTro(Scanner input){
-        LinkedList<String> list = new LinkedList<String>();
-        String divLine = ("----------------------------------");
-        boolean entering = true;
-        
-        System.out.println("Creating Tro Lables...");
-        System.out.print("Part Number: ");
-        String p = input.nextLine();
-        System.out.println();
-        System.out.print("Quanity: ");
-        int q = input.nextInt();
-        System.out.println();
-        String v = "500124";
-        
-        System.out.println("Enter the 1t/9d as _# of lables_ _data_");
-        while(entering){
-            String holder = input.nextLine();
-
-    	    if (holder.startsWith("/")){
-    	        String temp = holder.substring(0,2);
-    	        switch (temp){
-    	            case "/t" : entering = false;
-    	                        System.out.println("/t<> detected\n");
-    	                        System.out.println(list.size() + " Items saved");
-    	                        System.out.println(divLine);
-    	        }
-    	    }else{
-    	        int repeat = Integer.parseInt(holder.substring(0,1));
-    	        for (int i = 0; i < repeat; i++){
-    	            String temp = "@P" + p + "@Q" + q + "@V" + v + "@1T" + holder + "@9D" + holder;
-    	            list.add(holder);
-    	        }
-    	    }
-    	    
-        }
-        return list;
-    }
-    
-
-    
-    static public void subStringAll(Scanner input, Label[] labelData, String n){
-        String [] data = n.split("\\s+");
-        //a[0] - Substring fuction call
-        //a[1] - The feild you wish to substring
-        
-        System.out.println("Please enter spaces to select the portion you wish to keep");
-        
-        switch (data[1]){
-            case "p"  : System.out.println("SubStringing Part Number.."); 
-                        System.out.println("#" + labelData[0].getP()); break;
-            case "1t" : System.out.println("SubStringing Lot Number..");
-                        System.out.println("#" + labelData[0].getT()); break;
-            case "9d" : System.out.println("SubStringing Date Code.."); 
-                        System.out.println("#" + labelData[0].getD()); break;
-            case "q"  : System.out.println("SubStringing Quanity.."); 
-                        System.out.println("#" + labelData[0].getQ()); break;
-            case "v"  : System.out.println("SubStringing Vender..");
-                        System.out.println("#" + labelData[0].getV()); break;
-        }
-        System.out.print("#");
-        String holder = input.nextLine();
-        //int index = input.nextLine().length()-1;
-        //System.out.println("Holder:" + holder);
-        //int index = holder.length()-1;
-        
-        //int one = Integer.parseInt(n.substring(5,6));
-        //int two = Integer.parseInt(n.substring(7,8));
-        
-        
-        String temp = "";
-        for (int i = 0; i < labelData.length; i++){
-            switch (data[1]){
-                //case "p"  : labelData[i].setP(labelData[i].getP().substring(one,two)); break;
-                //case "1t" : labelData[i].setT(labelData[i].getT().substring(one,two)); break;
-                //case "9d" : labelData[i].setD(labelData[i].getD().substring(one,two)); break; 
-                //case "q"  : labelData[i].setQ(labelData[i].getQ().substring(one,two)); break;
-                //case "v"  : labelData[i].setV(labelData[i].getV().substring(one,two)); break;
-                
-                case "p"  : temp = crop(labelData[i].getP(),holder);
-                            labelData[i].setP(temp); 
-                            System.out.println("Part Number substringed to: P" + temp); break;
-                case "1t" : temp = crop(labelData[i].getT(),holder);
-                            labelData[i].setT(temp); 
-                            System.out.println("Lot Code substringed to: 1T" + temp); break;
-                case "9d" : temp = crop(labelData[i].getD(),holder);
-                            labelData[i].setD(temp); 
-                            System.out.println("Date Code substringed to: 9D" + temp); break;
-                case "q"  : temp = crop(labelData[i].getQ(),holder);
-                            labelData[i].setQ(temp); 
-                            System.out.println("Quanity substringed to: Q" + temp); break;
-                case "v"  : temp = crop(labelData[i].getV(),holder);
-                            labelData[i].setV(temp); 
-                            System.out.println("Vender substringed to: V" + temp); break;
-                default   : System.out.println("Comman not found");
-            }
-        }
-        
-    }
-    static public String crop(String n, String key){
-        String holder = "";
-        key = key + "                                      ";
-        for (int i = 0; i < n.length(); i++){
-            if (key.charAt(i) == '_'){
-                holder = holder + n.charAt(i);
-            }
-        }
-        return holder;
-    }
-    
-    static public void changeAll(Label[] labelData, String n){
-        String[] data = null;
-        try {
-            data = n.split("\\s+");
-        }catch(ArrayIndexOutOfBoundsException e){
-            System.out.println("Arruments inccorect");
-            return;
-        }
-
-        
-        //a[0] - The change fuction call
-        //a[1] - The feild you wish to change
-        //a[2] - What you want it to be changed to
-        switch (data[1]){
-            case "p"  : System.out.println("Changeing Part Number to: " + data[2]); break;
-            case "1t" : System.out.println("Change Lot Number to: " + data[2]); break;
-            case "9d" : System.out.println("Change Date Code to: " + data[2]); break;
-            case "q"  : System.out.println("Change Quanity to: " + data[2]); break;
-            case "v"  : System.out.println("Change Vender to: " + data[2]); break;
-        }
-        for (int i = 0; i < labelData.length; i++){
-            switch (data[1]){
-                case "p"  : labelData[i].setP(data[2]); break;
-                case "1t" : labelData[i].setT(data[2]); break;
-                case "9d" : labelData[i].setD(data[2]); break; 
-                case "q"  : labelData[i].setQ(data[2]); break;
-                case "v"  : labelData[i].setV(data[2]); break;
-                default   : System.out.println("Comman not found");
-            }
-        }
-    }
-
-    static public void convertToZPL(Scanner input, Label[] labelData, String n){
-        String[] data = null;
-        if (n.length() > 2){
-            data = n.split("\\s+");
-        }
-        String user = "";
-        if (data != null){
-            if (data.length > 0){
-                switch(data[1]){
-                    case "b" : user = "Bailey Hubabrd"; break;
-                    case "n" : user = "N/A"; break;
-                }
-           }
-        }else{
-            System.out.print("Enter your full name: ");
-            user = input.nextLine();
-        }
-       
-        clearConsole(); 
-        
-        System.out.print("^XZ\n");
-        for (int i = 0; i < labelData.length; i++){
-            System.out.println(labelData[i].formatZPL(user,i));
-        }
-        System.out.println("}$");
-    }
-    
-    static public Label[] convertToLabels(String[] dataBase){
-        Label[] temp = new Label[dataBase.length];
-        for (int i = 0; i < dataBase.length; i++){
-            temp[i] = new Label();
-            temp[i].formatLabel(dataBase[i]);
-             
-        }
-        return temp;
-    }
-    
-    static public void helpCommand(){
-        System.out.println("[List of commands]----------------");
-        System.out.println("/p : Profile, select a label profile.");
-        System.out.println("/d : Enter new data");
-        System.out.println("/a : Prints out the contents of the array");
-        System.out.println("/l : Prints out the contents of the label dataBase");
-        System.out.println("/z : Fomats the the ZPL output");
-        System.out.println("/a : Changes the contents of that feild");
-        System.out.println("/s : SubStrings the given feild");
-        System.out.println("/q : Takes in ints | 0 restarts program, 1 clears console");
-        System.out.println("----------------------------------");
-    }
-    
-    static public LinkedList<String> enterData(Scanner input){
-        LinkedList<String> list = new LinkedList<String>();
-        boolean entering = true;
-        String divLine = ("----------------------------------");
-        
-        System.out.println("Start entering data parsed by [enter]'s");
-        System.out.println("Use '/d' to finalize the list");
-        int index = 0;
-        while (entering){
-            System.out.print("[" + (index+1) + "]");
-    	    String holder = input.nextLine();
-    	    //System.out.println("Captured: '" + holder + "'" + "\n" + divLine);
-    	    if (holder.startsWith("/")){
-    	        String temp = holder.substring(0,2);
-    	        switch (temp){
-    	            case "/d" : entering = false;
-    	                        System.out.println("/d<> detected\n");
-    	                        System.out.println(list.size() + " Items saved");
-    	                        System.out.println(divLine);
-    	                        
-    	        }
-    	    }else{
-    	        //dataBase[index] = holder;
-    	        list.add(holder);
-    	        index++;
-    	    }
-        }
-        //String[] temp = new String[list.size()];
-        //for (int i = 0; i < temp.length; i++){
-        //    temp[i] = list.get(i);
-        //}
-        return list;
-    }
-    
-    static public void printArray(String[] n){
-        System.out.println("Printing Data...");
-        for (int i = 0; i < n.length; i++){
-	        System.out.println (n[i]);
-      } 
-    }
-    
-    static public void printLabel(Label[] n){
-        System.out.println("Printing Data... " + n.length);
-        //Uncommment to print all labels
-        //for (int i = 0; i < n.length; i++){
-        int i = 0;
-            System.out.println("Printing[" + i + "]");
-            System.out.println(n[i].toString());
-        //}
-    }
-
-*/

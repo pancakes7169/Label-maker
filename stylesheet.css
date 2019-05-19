@@ -23,6 +23,7 @@ h2 {
     padding-top: 10px;
     background-color: #ffffff;
     width: 90%;
+    font-size: 13.9px;
 }
 
 textarea {
@@ -65,7 +66,13 @@ textarea {
 
 .center > #scroll {
     width: 25px;
+    display: none;
 }
+
+#scrollShow{
+    width: 25px;
+}
+
 
 
 .center > #singelInput {
@@ -74,11 +81,11 @@ textarea {
 
 /*Custom Labels autibute editor*/
 .customLable input {
-    width: 50px;
+    width: 40px;
 }
 
 .customLable input[type=checkbox]{
-  width: 20px;
+  width: 15px;
 }
 
 .customLable input[type="checkbox"] + input{
@@ -100,6 +107,9 @@ body.noScroll { /* ...or body.dialogShowing */
 }
 
 
+.line {
+  border-bottom: 3px solid gray ;  
+}
 
 
 
@@ -118,7 +128,8 @@ header {
 
 .mainNav li {
     display: inline;
-    padding: 5px;
+    padding: px;
+    padding-left: 20px;
     float: left;
     position: relative;
     top: 20px;
@@ -130,7 +141,7 @@ header {
     text-align: right;
     color: white;
     padding-right: 6px;
-    padding-top: 6px;
+    padding-top: 12px;
 }
 /*Sub Nav Title and Buttons*/
 .headerImage {
@@ -220,6 +231,12 @@ a {
     position: relative;
     top: 20px;
 }
+.LeftFooter{
+    float: left;
+    width:70%;
+}
+
+
 
 
 

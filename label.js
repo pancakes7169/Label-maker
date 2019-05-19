@@ -7,33 +7,32 @@ function label(n) {
     var q = "";
     var v = "";
     
+    
     this.formatLabel = function(n){
         var intProfile = document.getElementById("profile").value;
         if (true){
             if (intProfile == 0) {//Defalt
                 n = n.toUpperCase();
-                p = this.correctPartNum(this.extract(n,"PA2C"));
+                p = this.extract(n,"PA2C");
                 t = this.extract(n,"1T"); 
                 if (this.extract(n,"2T").length > 2)
                     t = "1TMULT";
                 d = this.extract(n,"9D"); 
-                q = this.correctQuantiy(this.extract(n,"Q"));
+                q = this.extract(n,"Q");
                 v = this.extract(n,"V");
                 
             }//Defalut
             if (intProfile == 1) {//Custom
                 n = n.toUpperCase();
-                p = this.correctPartNum(this.customExtract(n,this.gV("p"),this.gV("p2")));
+                p = this.customExtract(n,this.gV("p"),this.gV("p2"));
                 t = this.customExtract(n,this.gV("t"),this.gV("t2"));
                 if (use1tMult.checked == true)
                     if (this.customExtract(n,this.gV("2t"),this.gV("2t2")).length > 2)
                         t = "1TMULT";
                 d = this.customExtract(n,this.gV("d"),this.gV("d2"));
-                if (use9dMult.checked == true)
-                    console.log("Looking for mult");
                     if (this.customExtract(n,this.gV("2d"),this.gV("2d2")).length > 2)
                         d = "9DMULT";
-                q = this.correctQuantiy(this.customExtract(n,this.gV("q"),this.gV("q2")));
+                q = this.customExtract(n,this.gV("q"),this.gV("q2"));
                 v = this.customExtract(n,this.gV("v"),this.gV("v2"));
                 if (document.getElementById("copy1t9d").checked)
                         if(t == "" && d != "")
@@ -46,28 +45,78 @@ function label(n) {
             }//Bortech
             if (intProfile == 3) {//Dynamic
                 n = n.toUpperCase();
-                p = correctPartNum(extract(n,"PA2C"));
+                p = extract(n,"PA2C");
                 t = extract(n,"1T");
                 d = extract(n,"6D"); 
-                q = correctQuantiy(extract(n,"Q"));
+                q = extract(n,"Q");
                 v = extract(n,"V");      
             }//Dynamic
             if (intProfile == 4) {
                     
             }//Null
-            }
+        }
+        this.fixLabel();
         
     };
-    
-    this.correctPrefix = function(){
-        console.log("CorrectPrefixCalled");
-        if(!n.startsWith("P")  && p != "") p = "P" + p;
-        if(!n.startsWith("1T") && t != "") t = "1T" + t;
-        if(!n.startsWith("9D") && d != "") d = "9D" + d;
-        if(!n.startsWith("Q")  && q != "") q = "Q" + q;
-        if(!n.startsWith("V")  && v != "") v = "V" + v;
+    //Fix Lables
+    //-------------------------------------------------------------------------
+    this.fixLabel       = function(){
+        this.correctPrefix();
+        p = this.correctPartNum(p);
+        t = this.correctLot(t);
+        q = this.correctQuantiy(q);
+        
+        
     }
     
+    this.correctPrefix  = function(){
+        if(!p.startsWith("P")  && p != "") p = "P" + p;
+        if(!t.startsWith("1T") && t != "") t = "1T" + t;
+        if(!d.startsWith("9D") && d != "") d = "9D" + d;
+        if(!q.startsWith("Q")  && q != "") q = "Q" + q;
+        if(!v.startsWith("V")  && v != "") v = "V" + v;
+    }
+    
+    this.correctPartNum = function(n){
+        if (n.length == 0){
+            return n;
+        }
+        var num = 13-n.length;
+        if (n.length < 13){
+            for (var i = 0; i < num; i++){
+                n = n + "0";
+            }
+        }
+        return n;
+    };
+    
+    this.correctLot     = function(n){
+        if (n.length > 17){
+            return n.substr(0,17);
+        }
+        return n;
+    }
+    
+    this.correctQuantiy = function(n){
+       if (this.findNonNum(n) != -1){
+            return n.substring(0,this.findNonNum(n));
+        }
+        return n;
+
+    };
+    
+    this.findNonNum = function(n){
+        for (var i = 2; i<n.length; i++){
+            if (isNaN(n.charAt(i))){//Is not a number
+                return i;
+            }
+        }
+        return -1;
+    };
+    
+    //Data extraction methods
+    //-------------------------------------------------------------------------
+    //Get Value
     this.gV = function(n){
         return document.getElementById(n).value
     }
@@ -91,25 +140,7 @@ function label(n) {
         return "";
 
     };
-    
-    this.correctPartNum = function(n){
-       if (n.length == 0){
-            return n;
-        }
-        if (n.length < 13){
-            n = n + "0";
-            this.correctPartNum(n);
-        }
-        return n;
-    };
-    
-    this.correctQuantiy = function(n){
-       if (this.findNonNum(n) != -1){
-            return n.substring(0,this.findNonNum(n));
-        }
-        return n;
-
-    };
+    //-------------------------------------------------------------------------
     
     this.toStringC = function(){
         var a1 = "-------------------------------";
@@ -121,17 +152,8 @@ function label(n) {
         return (a1 + b1 + c1 + d1 + e1 + f1 + "");
     };
     
-    this.findNonNum = function(n){
-        for (var i = 2; i<n.length; i++){
-            if (isNaN(n.charAt(i))){//Is not a number
-                return i;
-            }
-        }
-        return -1;
-    };
-    
     this.checkForNull = function(){
-        if (p === "")
+        if (p === "" && t === "" && d === "" && q === "" && v === "")
             return true;
         return false;
         
