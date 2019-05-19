@@ -32,7 +32,7 @@ function label(n) {
                 if (use1tMult.checked == true)
                     if (this.customExtract(n,this.gV("2t"),this.gV("2t2")).length > 2){
                         t = "1TMULT";
-                        console.log(this.customExtract(n,this.gV("2t"),this.gV("2t2"));
+                        //console.log(this.customExtract(n,this.gV("2t"),this.gV("2t2"));
                     }
                 d = this.customExtract(n,this.gV("d"),this.gV("d2"));
                     if (this.customExtract(n,this.gV("2d"),this.gV("2d2")).length > 2)
