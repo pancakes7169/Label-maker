@@ -7,6 +7,17 @@ function label(n) {
     var q = "";
     var v = "";
     
+<<<<<<< HEAD
+=======
+    this.correctPrefix = function(){
+        console.log("CorrectPrefixCalledv2");
+        if(!n.startsWith("P")  && p != "") p = "P" + p;
+        if(!n.startsWith("1T") && t != "") t = "1T" + t;
+        if(!n.startsWith("9D") && d != "") d = "9D" + d;
+        if(!n.startsWith("Q")  && q != "") q = "Q" + q;
+        if(!n.startsWith("V")  && v != "") v = "V" + v;
+    };
+>>>>>>> 34a01e8c7955861c671b968b35439ca259044e71
     
     this.formatLabel = function(n){
         var intProfile = document.getElementById("profile").value;
@@ -54,9 +65,16 @@ function label(n) {
             if (intProfile == 4) {
                     
             }//Null
+<<<<<<< HEAD
         }
         this.fixLabel();
+=======
+            
+            }
+>>>>>>> 34a01e8c7955861c671b968b35439ca259044e71
         
+        //this.correctPrefix();
+
     };
     //Fix Lables
     //-------------------------------------------------------------------------
@@ -69,6 +87,7 @@ function label(n) {
         
     }
     
+<<<<<<< HEAD
     this.correctPrefix  = function(){
         if(!p.startsWith("P")  && p != "") p = "P" + p;
         if(!t.startsWith("1T") && t != "") t = "1T" + t;
@@ -76,6 +95,9 @@ function label(n) {
         if(!q.startsWith("Q")  && q != "") q = "Q" + q;
         if(!v.startsWith("V")  && v != "") v = "V" + v;
     }
+=======
+    
+>>>>>>> 34a01e8c7955861c671b968b35439ca259044e71
     
     this.correctPartNum = function(n){
         if (n.length == 0){
@@ -119,7 +141,7 @@ function label(n) {
     //Get Value
     this.gV = function(n){
         return document.getElementById(n).value
-    }
+    };
     
     this.extract = function(n,pram){
         if (!n.includes(pram)) {return "";}
@@ -133,7 +155,7 @@ function label(n) {
     
     this.customExtract = function(n,pram1,pram2){
         if (!n.includes(pram1)) {return "";}
-        var index1 = n.indexOf(pram1) + pram1.length;
+        var index1 = n.indexOf(pram1) + 1; // pram1.length;
         var index2 = n.indexOf(pram2,index1+1);
         if (index1 != -1 && index2 != -1)
             return n.substring(index1,index2);
