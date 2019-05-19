@@ -128,7 +128,8 @@ function label(n) {
     };
     
     this.correctDate = function(n){
-        if (n.charAt(2) == '6' && n.charAt(3) == 'D'){
+        //if (n.charAt(2) == '6' && n.charAt(3) == 'D'){
+        if (n.toUpperCase().includes("6D")){
             return n.substr(0,2) + n.substr(4);
         }
     };
