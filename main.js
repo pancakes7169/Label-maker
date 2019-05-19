@@ -73,12 +73,13 @@ function enterData(){
 
 function convertToZPL(){
     if (username.value === ""){
-        getUsername();
+        //getUsername();
     }
     var temp = "";
     temp += "${\n";
     for (var i = 0; i < labelData.length; i++){
-        temp += labelData[i].formatZPL(username.value,i);
+        //temp += labelData[i].formatZPL(username.value,i);
+       temp += labelData[i].formatZPL(localStorage.user,i); 
     }
     temp += "\n}$";
     zplOutput.value = temp;
@@ -306,11 +307,12 @@ function printSingleLabel(){
     singleLabel.setQ(document.getElementById("qSL").value);
     singleLabel.setV(document.getElementById("vSL").value);
     if (username.value === ""){
-        getUsername();
+        //getUsername();
     }
     var temp = "";
     temp += "${\n";
-    temp += singleLabel.formatZPL(username.value,0);
+    //temp += singleLabel.formatZPL(username.value,0); 
+   temp += singleLabel.formatZPL(localStorage.user,0); 
     temp += "\n}$";
     zplOutput.value = temp;
     //copyStringToClipboard();
