@@ -132,6 +132,7 @@ function label(n) {
         if (n.toUpperCase().includes("6D")){
             return n.substr(0,2) + n.substr(4);
         }
+        return n;
     };
     
     //Data extraction methods
