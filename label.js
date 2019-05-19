@@ -179,10 +179,10 @@ function label(n) {
     };
     
     this.cutFront = function(n,i){
-        if (n.length >= i)
+        /*if (n.length >= i)
             return n.substr(i);
-        return n;
-         //return n.substring(i);
+        return n;*/
+         return n.substr(i);
     };
     
     this.formatZPL = function(u,index){
