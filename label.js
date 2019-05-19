@@ -76,6 +76,7 @@ function label(n) {
         this.correctPrefix();
         p = this.correctPartNum(p);
         t = this.correctLot(t);
+        d = this.correctDate(d);
         q = this.correctQuantiy(q);
         
         
@@ -124,6 +125,12 @@ function label(n) {
             }
         }
         return -1;
+    };
+    
+    this.correctDate = function(n){
+        if (n.charAt(2) == '6' && n.charAt(3) == 'D'){
+            return n.substr(0,2) + n.substr(4,n.length);
+        }
     };
     
     //Data extraction methods
