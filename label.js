@@ -180,7 +180,7 @@ function label(n) {
     
     this.cutFront = function(n,i){
         if (n.length >= i)
-            return n.substri,n.length);
+            return n.substr(i);
         return n;
          //return n.substring(i);
     };
