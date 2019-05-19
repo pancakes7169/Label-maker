@@ -46,7 +46,14 @@ function label(n) {
                             d = t
             }//Custom
             if (intProfile == 2) {//Bortech
-                
+                n = n.toUpperCase();
+                p = this.extract(n,"PA2C");
+                t = this.extract(n,"1T"); 
+                if (this.extract(n,"2T").length > 2)
+                    t = "1TMULT";
+                d = this.extract(n,"6D"); 
+                q = this.extract(n,"Q");
+                v = this.extract(n,"V");
             }//Bortech
             if (intProfile == 3) {//Dynamic
                 n = n.toUpperCase();
@@ -138,7 +145,7 @@ function label(n) {
     
     this.customExtract = function(n,pram1,pram2){
         if (!n.includes(pram1)) {return "";}
-        var index1 = n.indexOf(pram1) + pram1.length;
+        var index1 = n.indexOf(pram1) + 1; //pram1.length;
         var index2 = n.indexOf(pram2,index1+1);
         if (index1 != -1 && index2 != -1)
             return n.substring(index1,index2);
