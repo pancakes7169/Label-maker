@@ -1,7 +1,7 @@
 /*eslint-disable*/
-function label(n) {
-    n = n;
-    var p = "Test";
+function label(a) {
+    var n = a;
+    var p = "";
     var t = "";
     var d = "";
     var q = "";
@@ -23,27 +23,27 @@ function label(n) {
                 d = this.extract(n,"9D"); 
                 q = this.extract(n,"Q");
                 v = this.extract(n,"V");
-                
             }//Defalut
             if (intProfile == 1) {//Custom
                 n = n.toUpperCase();
                 p = this.customExtract(n,this.gV("p"),this.gV("p2"));
                 t = this.customExtract(n,this.gV("t"),this.gV("t2"));
                 if (use1tMult.checked == true)
-                    if (this.customExtract(n,this.gV("2t"),this.gV("2t2")).length > 2){
+                   if (this.customExtract(n,this.gV("2t"),this.gV("2t2")).length > 2)
                         t = "1TMULT";
-                        console.log(this.customExtract(n,this.gV("2t"),this.gV("2t2")));
-                    }
                 d = this.customExtract(n,this.gV("d"),this.gV("d2"));
-                    if (this.customExtract(n,this.gV("2d"),this.gV("2d2")).length > 2)
-                        d = "9DMULT";
+                    if (use9dMult.checked == true)  
+                        if (this.customExtract(n,this.gV("2d"),this.gV("2d2")).length > 2)
+                            d = "9DMULT";
                 q = this.customExtract(n,this.gV("q"),this.gV("q2"));
                 v = this.customExtract(n,this.gV("v"),this.gV("v2"));
-                if (document.getElementById("copy1t9d").checked)
-                        if(t == "" && d != "")
-                            t = d
-                        if(d == "" && t != "")
-                            d = t
+                if (document.getElementById("copy1t9d").checked){
+                    if(t == "" && d != "")
+                        t = d
+                    if(d == "" && t != "")
+                        d = t  
+                }
+                        
             }//Custom
             if (intProfile == 2) {//Bortech
                 n = n.toUpperCase();
@@ -57,11 +57,11 @@ function label(n) {
             }//Bortech
             if (intProfile == 3) {//Dynamic
                 n = n.toUpperCase();
-                p = extract(n,"PA2C");
-                t = extract(n,"1T");
-                d = extract(n,"6D"); 
-                q = extract(n,"Q");
-                v = extract(n,"V");      
+                p = this.extract(n,"PA2C");
+                t = this.extract(n,"1T");
+                d = this.extract(n,"6D"); 
+                q = this.extract(n,"Q");
+                v = this.extract(n,"V");      
             }//Dynamic
             if (intProfile == 4) {
                     
@@ -78,7 +78,7 @@ function label(n) {
         t = this.correctLot(t);
         d = this.correctDate(d);
         q = this.correctQuantiy(q);
-        
+        //console.log(this.toStringC());
         
     }
     
@@ -91,11 +91,12 @@ function label(n) {
     }
     
     this.correctPartNum = function(n){
+        var t = "Hello".length;
         if (n.length == 0){
             return n;
         }
-        var num = 13-n.length;
-        if (n.length < 13){
+        var num = 14-n.length;
+        if (n.length < 14){
             for (var i = 0; i < num; i++){
                 n = n + "0";
             }
@@ -187,10 +188,12 @@ function label(n) {
          return n.substr(i);
     };
     
-    this.formatZPL = function(u,index){
-        var a = [13];
+    this.formatZPL = function(u,index,type){
+        //Type 1 : Nomral Label
+        //Type 2 : Singel Lable
+        var a = [16];
         //a[0] is the bottom right of the label
-        a[0]  = "^XA\n^FO20,770^AQR36,20^FD"; //[" + (index+1) + "]";
+        a[0]  = "^XA\n^FO20,770^AQR36,20^FD [" + (index+1) + "]";
     	a[1]  = "^FS\n^FO400,60^AQR36,20^FD(P) PART NO  " +this.cutFront(p,1); 
     	a[2]  = "^FS\n^FO345,60^BY2,3.0,10^BCR,55,N,N,N^FDP" +this.cutFront(p,1); 
     	a[3]  = "^FS\n^FO400,540^AQR36,20^FD(Q) QUANTITY  " +this.cutFront(q,1); 
@@ -201,8 +204,25 @@ function label(n) {
         a[8]  = "^FS\n^FO145,60^BY2,3.0,10^BCR,55,N,N,N^FD9D" +this.cutFront(d,2); 
     	a[9]  = "^FS\n^FO300,540^AQR36,20^FD(V) SUPPLIER  " +this.cutFront(v,1); 
         a[10] = "^FS\n^FO245,540^BY2,3.0,10^BCR,55,N,N,N^FDV" +this.cutFront(v,1); 
-    	a[11] = "^FS\n^FO200,550^AQR36,20^FDUSER  " +  u + " " + (index+1); 
-    	a[12] = "^FS\n^XZ";
+    	a[11] = "^FS\n^FO200,550^AQR36,20^FDUSER  " +  u; 
+        a[12] = " " + (index+1);
+    	a[13] = "^FS";
+        a[14] = "\n^FO30,600^BXR,3,200,48,48,~^FD\n" + n + "^FS";
+        a[15] = "\n^XZ";
+        if (document.getElementById('MasterLabel').checked == false){
+            a[14] = "";
+        }
+        if (document.getElementById('altLabelNum').checked == false){
+            a[0] = a[0].substr(0,26);
+        }else{
+            a[12] = "";
+        }
+        if (type == 2){
+            a[13] = "";
+        }
+        if (index == -1){
+            a[12] = "";
+        }
         var r = "";
         for (var i = 0; i < a.length; i++){
             r = r + a[i];

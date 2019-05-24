@@ -13,6 +13,7 @@ function runCommand(n){
     if (n.startsWith("/")){
         switch (n.substring(0,2)){
             case "/h" : helpCommand(); break;
+            case "/u" : username.innerHTML = n.substr(3); break;
             //case "/d" : enterData(); break;
             //case "/z" : convertToZPL(n); break;
             /*case "/a" : println("pa"); printArray(dataBase); break;
@@ -69,6 +70,8 @@ function enterData(){
     dataBaseCounter.value = labelData.length + " Lables";
     diplayLabelData(0,-1);
     updateScrollButtons();
+    updateSidePartNum();
+    upadateSideVender();
 }    
 
 function convertToZPL(){
@@ -79,7 +82,7 @@ function convertToZPL(){
     temp += "${\n";
     for (var i = 0; i < labelData.length; i++){
         //temp += labelData[i].formatZPL(username.value,i);
-       temp += labelData[i].formatZPL(localStorage.user,i); 
+       temp += labelData[i].formatZPL(localStorage.user,i,1); 
     }
     temp += "\n}$";
     zplOutput.value = temp;
@@ -95,12 +98,21 @@ function claerDatabase(){
     dataBaseCounter.value = labelData.length + " Lables";
     zplOutput.value = "";
     clearSingeLabelFeilds();
+    scrollShow.value = 1;
+    scroll.value = 0;
+    document.getElementById('change').value = "";
+}
+
+function clearAll(){
+    claerDatabase();
+    clearOutput();
 }
 
 
 //-----------------------------------------------------------------------------------
 function diplayLabelData(i,temp){
     scroll.value = i;
+    scrollShow.value = i+1;
     if (temp != -1)
         savePreivousLabel(temp);
     document.getElementById("pSL").value = labelData[i].getP();
@@ -142,7 +154,7 @@ function searchKanban(){
     var n = document.getElementById("pSL").value;
     for (var i = 0; i < kanban.length; i++){
             if (parseInt(kanban[i][0]) == n.substr(1,n.length)){
-                return "V:" + kanban[i][1] + " " + kanban[i][2];
+                return "V:" + kanban[i][1] + " " + kanban[i][2] + "L";
             }
         }
     return "Kanban not found"
@@ -183,6 +195,11 @@ function getFormatedWeight(i){
 
 function upadateSideVender(){
     var sideV = document.getElementById("SideV");
+    /*if (vSL != null){
+        if (vSL == document.getElementById("vSL").value){
+            return;
+        }
+    }*/
     var vSL   = document.getElementById("vSL").value;
     if (vSL.length == 7){
         sideV.innerHTML = searchVerderList();
@@ -245,7 +262,7 @@ function extractedDataFromSinleLabel(){
     //Take in individual feilds
     //------------------------------------------------------------
     var intProfile = document.getElementById("profile").value;
-    if (intProfile == 0){
+    if (intProfile == 0){//Default
         n = n.toLowerCase();
         if (n.startsWith("p")){
             document.getElementById("pSL").value = n.toUpperCase();
@@ -262,9 +279,9 @@ function extractedDataFromSinleLabel(){
         if (n.startsWith("v")){
             document.getElementById("vSL").value = n.toUpperCase();
         }
-    }else if (intProfile == 1){
+    }else if (intProfile == 1){//Custom
         if (n.startsWith(document.getElementById('p').value.toLowerCase())){
-            document.getElementById("pSL").value = correctPartNum(n.toUpperCase());
+            document.getElementById("pSL").value = n.toUpperCase();
         }
         if (n.startsWith(document.getElementById('t').value.toLowerCase())){
             document.getElementById("tSL").value = n.toUpperCase();
@@ -278,7 +295,15 @@ function extractedDataFromSinleLabel(){
         if (n.startsWith(document.getElementById('v').value.toLowerCase())){
             document.getElementById("vSL").value = n.toUpperCase();
         } 
-        console.log(document.getElementById('p').value.toLowerCase());
+        var t = document.getElementById("tSL");
+        var d = document.getElementById("dSL");
+        if (document.getElementById("copy1t9d").checked){
+            if(t.value == "" && d.value != "")
+                t.value = d.value.substr(2);
+            if(d.value == "" && t.value != "")
+                d.value = t.value.substr(2); 
+        }
+        //console.log(document.getElementById('p').value.toLowerCase());
     }
     str.value = "";
     //Save it back to single label
@@ -297,6 +322,12 @@ function setSingleLabel(){
     singleLabel.setD(document.getElementById("dSL").value);
     singleLabel.setQ(document.getElementById("qSL").value);
     singleLabel.setV(document.getElementById("vSL").value);
+    singleLabel.fixLabel();
+    document.getElementById("pSL").value = singleLabel.getP();
+    document.getElementById("tSL").value = singleLabel.getT();
+    document.getElementById("dSL").value = singleLabel.getD();
+    document.getElementById("qSL").value = singleLabel.getQ();
+    document.getElementById("vSL").value = singleLabel.getV();
 }
 
 function printSingleLabel(){
@@ -312,7 +343,7 @@ function printSingleLabel(){
     var temp = "";
     temp += "${\n";
     //temp += singleLabel.formatZPL(username.value,0); 
-   temp += singleLabel.formatZPL(localStorage.user,0); 
+    temp += singleLabel.formatZPL(localStorage.user,-1,2); 
     temp += "\n}$";
     zplOutput.value = temp;
     //copyStringToClipboard();
@@ -363,6 +394,8 @@ function changeAll(){
     diplayLabelData(scroll.value,-1);
     if (!zplOutput.value == "")
         convertToZPL();
+    updateSidePartNum();
+    upadateSideVender();
 }
 
 
@@ -381,6 +414,24 @@ function resetCustomLabel(){
     document.getElementById("2d2").value = "@";
     document.getElementById("q2").value = "@";
     document.getElementById("v2").value = "@";
+    
+}
+
+function clearAtSymbol(){
+    document.getElementById("p").value = "P";
+    document.getElementById("t").value = "1T";
+    document.getElementById("2t").value = "2T";
+    document.getElementById("d").value = "9D";
+    document.getElementById("2d").value = "9D";
+    document.getElementById("q").value = "Q";
+    document.getElementById("v").value = "V";
+    document.getElementById("p2").value = "";
+    document.getElementById("t2").value = "";
+    document.getElementById("2t2").value = "";
+    document.getElementById("d2").value = "";
+    document.getElementById("2d2").value = "";
+    document.getElementById("q2").value = "";
+    document.getElementById("v2").value = "";
     
 }
 

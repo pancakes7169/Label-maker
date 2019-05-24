@@ -43,6 +43,7 @@
                     <textarea id="help" rows="1" cols="90">    [Use '/h' for help]</textarea>
                     <textarea id="output" autofocus rows="20" cols="85" style="white-space:nowrap;overflow:auto;" ></textarea>
                     <button type="button" onclick="clearOutput()">Clear output</button>
+                    <button type="button" onclick="clearAll()">Master Clear</button>
                     <br /><br />
                     <!--<textarea id="input"  rows="1" cols="100"></textarea>-->
                     <label>Input:</label>
@@ -123,6 +124,7 @@
                             <label>V :</label> <input id="v" value="@V">   <input id="v2" value="@"><br />
                             <br />
                             <button type="button" onclick="resetCustomLabel()">Reset</button>
+                            <button type="button" onclick="clearAtSymbol()">Clear @</button>
                             <input type="checkbox" id="copy1t9d"> 
                             <label>1t and 9d are the same</label>
                         </div>
@@ -130,10 +132,6 @@
                     <fieldset>
                     <legend>Other Options:</legend>
                         <div class="otherOptions">
-                            <p>Other Options</p>
-                            <label>Username:</label>
-                            <input id="username" value="">
-                            <br><br>
                             <select id="feild">
                                 <option value="p">P</option>
                                 <option value="1t">1T</option>
@@ -143,6 +141,12 @@
                             </select>
                             <input id="change" value="">
                             <button type="button" onclick="changeAll()">Chagne All</button>
+                            <br>
+                            <input type="checkbox" id="MasterLabel">
+                            <Label>Include Master Label</Label>
+                            <br>
+                            <input type="checkbox" id="altLabelNum">
+                            <Label>Use alt. Label Num</Label>
                         </div>
                     </fieldset>
 
@@ -189,32 +193,67 @@
         }, false);
         
         //Key Events
-        var input = document.getElementById("input");
-        input.addEventListener("keyup", function(event) {
+        document.getElementById("input").      addEventListener("keyup", function(event) {
             if (event.keyCode === 13) {
                 enterKeyPressOnMainInput();
             }
         });
-        var input = document.getElementById("singelInput");
-        input.addEventListener("keyup", function(event) {
+        document.getElementById("singelInput").addEventListener("keyup", function(event) {
             if (event.keyCode === 13) {
                 enterKeyPressOnSingleInput();
                 updateSidePartNum();
                 upadateSideVender();
             }
         });
-        var input = document.getElementById("output");
-        input.addEventListener("keyup", function(event) {
+        document.getElementById("output").     addEventListener("keyup", function(event) {
             if (event.keyCode === 13) {
                 enterKeyPressOnOutput();
             }
         });
-        var input = document.getElementById("scrollShow");
-        input.addEventListener("keyup", function(event) {
+        document.getElementById("scrollShow"). addEventListener("keyup", function(event) {
             if (event.keyCode === 13) {
                 enterKeyPressOnScoll();
             }
         });
+        document.getElementById("change").     addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                changeAll();
+            }
+        });
+        
+        
+        //-------------------------------------------------------------
+        document.getElementById("pSL").        addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                savePreivousLabel(scroll.value);
+                convertToZPL();
+            }
+        });
+        document.getElementById("tSL").        addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                savePreivousLabel(scroll.value);
+                convertToZPL();
+            }
+        });
+        document.getElementById("dSL").        addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                savePreivousLabel(scroll.value);
+                convertToZPL();
+            }
+        });
+        document.getElementById("qSL").        addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                savePreivousLabel(scroll.value);
+                convertToZPL();
+            }
+        });
+        document.getElementById("vSL").        addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                savePreivousLabel(scroll.value);
+                convertToZPL();
+            }
+        });
+        
     </script>
     
 </html>
