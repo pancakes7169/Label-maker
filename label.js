@@ -39,9 +39,9 @@ function label(a) {
                 v = this.customExtract(n,this.gV("v"),this.gV("v2"));
                 if (document.getElementById("copy1t9d").checked){
                     if(t == "" && d != "")
-                        t = d.substr(0,2);
+                        t = d.substr(2);
                     if(d == "" && t != "")
-                        d = t.substr(0,2);  
+                        d = t.substr(2);  
                 }
                         
             }//Custom
