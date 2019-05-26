@@ -384,7 +384,7 @@ function changeAll(){
                         labelData[i].setT(n); break;
             case "9d" : if (!n.startsWith("9d")) n = "9D" + n;
                         labelData[i].setD(n); break;
-            case "Q"  : if (!n.startsWith("q")) n = "Q" + n;
+            case "q"  : if (!n.startsWith("q")) n = "Q" + n;
                         labelData[i].setQ(n); break;
             case "v"  : if (!n.startsWith("v")) n = "V" + n;
                         labelData[i].setV(n); break;
