@@ -1,6 +1,7 @@
 /*eslint-disable*/
 function label(a) {
     var n = a;
+    var m = "";
     var p = "";
     var t = "";
     var d = "";
@@ -16,7 +17,7 @@ function label(a) {
         if (true){
             if (intProfile == 0) {//Defalt
                 n = n.toUpperCase();
-                p = this.extract(n,"PA2C");
+                p = this.extract(n,"P");
                 t = this.extract(n,"1T"); 
                 if (this.extract(n,"2T").length > 2)
                     t = "1TMULT";
@@ -66,6 +67,34 @@ function label(a) {
             if (intProfile == 4) {
                     
             }//Null
+            //format masterLabel
+            if (true){
+                n = n.toUpperCase();
+                m+= this.masterExtract(n,"P"   );
+                m+= this.masterExtract(n,"12S" );
+                m+= this.masterExtract(n,"1P"  );
+                m+= this.masterExtract(n,"31P" );
+                m+= this.masterExtract(n,"12V" );
+                m+= this.masterExtract(n,"10V" );
+                m+= this.masterExtract(n,"2PE" );
+                m+= this.masterExtract(n,"20P" );
+                m+= this.masterExtract(n,"6D"  );
+                m+= this.masterExtract(n,"14D" );
+                m+= this.masterExtract(n,"30P" );
+                m+= this.masterExtract(n,"ZN" );
+                m+= this.masterExtract(n,"K"   );
+                m+= this.masterExtract(n,"16K0");
+                m+= this.masterExtract(n,"V"   );
+                m+= this.masterExtract(n,"Q"   );
+                m+= this.masterExtract(n,"20T" );
+                m+= this.masterExtract(n,"1T"  );
+                m+= this.masterExtract(n,"2T"  );
+                m+= this.masterExtract(n,"1Z"  );
+                m+= "@@" 
+            }//Master Label formating 
+            
+            
+            
         }
         this.fixLabel();
         
@@ -153,6 +182,14 @@ function label(a) {
 
     };
     
+    this.masterExtract = function(n,pram){
+        var temp = this.extract(n,pram);
+        if (temp == ""){
+           return "@" + pram; 
+        }
+        return "@" + temp;
+    }
+    
     this.customExtract = function(n,pram1,pram2){
         if (!n.includes(pram1)) {return "";}
         var index1 = n.indexOf(pram1) + 1; //pram1.length;
@@ -193,7 +230,7 @@ function label(a) {
         //Type 2 : Singel Lable
         var a = [16];
         //a[0] is the bottom right of the label
-        a[0]  = "^XA\n^FO20,770^AQR36,20^FD [" + (index+1) + "]";
+        a[0]  = "^XA\n^FO20,770^AQR36,20^FD [" + (parseInt(index)+1) + "]";
     	a[1]  = "^FS\n^FO400,60^AQR36,20^FD(P) PART NO  " +this.cutFront(p,1); 
     	a[2]  = "^FS\n^FO345,60^BY2,3.0,10^BCR,55,N,N,N^FDP" +this.cutFront(p,1); 
     	a[3]  = "^FS\n^FO400,540^AQR36,20^FD(Q) QUANTITY  " +this.cutFront(q,1); 
@@ -207,7 +244,7 @@ function label(a) {
     	a[11] = "^FS\n^FO200,550^AQR36,20^FDUSER  " +  u; 
         a[12] = " " + (index+1);
     	a[13] = "^FS";
-        a[14] = "\n^FO30,600^BXR,3,200,48,48,~^FD\n" + n + "^FS";
+        a[14] = "\n^FO30,600^BXR,3,200,48,48,~^FD\n" + m + "^FS";
         a[15] = "\n^XZ";
         if (document.getElementById('MasterLabel').checked == false){
             a[14] = "";
@@ -222,6 +259,7 @@ function label(a) {
         }
         if (index == -1){
             a[12] = "";
+            a[15] = "";
         }
         var r = "";
         for (var i = 0; i < a.length; i++){

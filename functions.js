@@ -7,6 +7,7 @@ var username, badgeNumber;
 var leftScroll, rightScoll, scroll, scrollShow;
 var use1tMult, use9dMult
 var dataBaseCounter;
+var subzplOutput1,subzplOutput2;
 
 var nextLine;
 var labelNumber = 0;
@@ -27,7 +28,10 @@ function onLoadBody() {
     scrollShow = document.getElementById("scrollShow");
     leftScroll =document.getElementById("leftScroll");
     rightScroll = document.getElementById("rightScroll");
+    subzplOutput1 = document.getElementById("subzplOutput1");
+    subzplOutput2 = document.getElementById("subzplOutput2");
     
+    updateSplit();
     
     //output.readOnly = true;
     help.readOnly = true;
@@ -55,10 +59,15 @@ function copyToOutput() {
 }
             
 function copyStringToClipboard(str) {
-    //var copyText = document.getElementById(str);
-    zplOutput.select();
+    document.getElementById(str).select();
     document.execCommand("copy");
-    window.alert("ZplOutput copied to clipboard");
+    //window.alert("ZplOutput copied to clipboard");
+    switch (str){
+        case "zplOutput"     : document.getElementById("CopiedLabel").style.display =                         'inline'; break;
+        case "subzplOutput1" : document.getElementById("CopiedLabel1").style.display                       = 'inline'; break;
+        case "subzplOutput2" : document.getElementById("CopiedLabel2").style.display                       = 'inline'; break;
+    }
+    
 }
             
 function print(n) {
@@ -139,6 +148,26 @@ function createTable(tableData) {
     document.body.appendChild(table);
 }
 
+function updateSplit(){
+    //console.log
+    if (labelData.length == 0){
+        subzplOutput1.value = "";
+        subzplOutput2.value = "";
+    }else{
+        convertToZPL();
+    }
+    document.getElementById("CopiedLabel").style.display = 'none';
+    document.getElementById("CopiedLabel1").style.display = 'none';
+    document.getElementById("CopiedLabel2").style.display = 'none';
+    if (document.getElementById("split").checked){
+        document.getElementById("nonSplit").style.display = 'none';
+        document.getElementById("splitOutput").style.display = 'block';
+    }else{
+        document.getElementById("splitOutput").style.display = 'none';
+        document.getElementById("nonSplit").style.display = 'block';
+    }
+}
+
 
 
             
@@ -146,13 +175,115 @@ function testFuction(){
     //var testLabel = new label("[)>@06@12S0001@1P5500038641@PA2C02517500@31PA2C02517500@20P@2PE  @Q60@16K0@V8327468@3SSp0000000ef73    @20T0101@15D19122025@9DD20190115@1T19A14EG@ZN @1Z000000163@@");
     //console.log(testLabel.toStringC());
     console.log("Start of 'testFucntion()'");
+    var n = zplOutput.value;
+    var key = n.split("\n");              console.log("k:" + key.length);
+    var dataP = new Array();
+    var dataQ = new Array();
+    for (var i = 1; i < key.length; i++){
+        var temp = key[i].split(/,?\s+/);
+        //var p = temp[2].replaceAll("-","");
+        var p = temp[2].split("-").join("")
+        var q = temp[4];
+        if (!p.includes("empty")){
+            dataP.push(p);
+            dataQ.push(q);
+        }
+    }
+    formatBill(dataP,dataQ);
+    
 
-    
-    
-  
+    console.log("--------------");
+    for (var i = 0; i < dataP.length; i++){
+        //console.log(dataP[i] + " " + dataQ[i]);
+    }
 }
 
+/*function formatBill(dataP, dataQ){
+    println("Bill of landing");
+    //Search for dupe partNums
+    for (var i = 0; i < dataP.length; i++){
+        var n = dataP[i];
+        var count = 1;
+        for (var j = i+1; j < dataP.length; j++){
+            if (dataP[j] === n){
+                count++;
+                i = j;
+            }
+        }
+        //Search for dup partnums 1
+        //console.log("i:" + i + " Count: " + count)
+        print("[" + count + "]" + "\t" + n);
+        var n2 = dataQ[i];
+        var count2 = 0;
+        var otherNums = new Array();
+        for (var j = i-count+1; j < i+1; j++){
+            //console.log("j:" + j);
+            if (dataQ[j] === n2){
+                count2++;
+            }else{
+                otherNums.push(dataQ[j]);
+            }
+        }
+        println("\t[" + count2 + "]" + "\t" + n2 + "\t| " + lookUpWeight(n,n2,count2));
+        for (var k = 0; k < otherNums.length; k++){
+            var num = otherNums[k];
+            var count3 = 0;
+            for (var a = i+1-count; a < count+i; a++){
+                if (dataQ[a] === num){
+                    count3++;
+                    k = a;
+                }
+            }
+            println("\t\t\t[" + count3 + "]\t" + num + "\t| " + lookUpWeight(n,num,count3));
+        }
+    }
+    
+    
 
+}
+
+function lookUpWeight(p,q,c){
+    console.log(">" + p + " " + q + " " + c);
+    for (var i = 0; i < weightList.length; i++){
+        if (weightList[i][1] === p){
+            console.log("Part Num found" + weightList[i][2]);
+            if (weightList[i][2] == q){
+                console.log("Quanity found");
+                return "Wegith: " + weightList[i][4] + " Total: " + weightList[i][4]*c + " " + weightList[i][3];
+            }
+        }
+    }
+    return "Not on weight chart";
+}
+    
+                
+  /*            
+
+
+/*
+function searchWeights(){
+    var n = document.getElementById("pSL").value;
+    var temp = "";
+    for (var i = 0; i < weightList.length; i++){
+            if (parseInt(weightList[i][1]) == n.substr(1,n.length)){
+                temp = getFormatedWeight(i);
+                i++;
+                while(weightList[i][0] == "1" && i < weightList.length-1){
+                    if (parseInt(weightList[i][1]) == n.substr(1,n.length)){
+                        temp+= "\n" + getFormatedWeight(i);
+                    }
+                    i++;
+                }
+                return temp;
+            }
+        }
+    return "Weight not found"
+}
+
+function getFormatedWeight(i){
+    return "V:" + weightList[i][3] + " Q:" + weightList[i][2] + " " + weightList[i][4] + "Lbs";
+}
+*/
 
 
 

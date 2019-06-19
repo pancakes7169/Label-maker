@@ -23,7 +23,7 @@ h2 {
     padding-top: 10px;
     background-color: #ffffff;
     width: 90%;
-    font-size: 13.9px;
+    font-size: 13.9px; 
 }
 
 textarea {
@@ -32,6 +32,37 @@ textarea {
 }
 
 
+.outer{
+    width: 115%; 
+    overflow:hidden;
+    padding-top: 5px;
+}
+.innerwrap{
+    width:95%;
+}
+.inner{
+    width:45%; 
+    height:auto;
+    float:left;
+}
+
+.inner > textarea {
+    width:95%;
+}
+
+#splitAt{
+    width: 30px;
+}
+
+#num1{
+    float: right;
+    padding-right: 5px;
+}
+
+#num2{
+    float: right;
+    padding-right: 5px;
+}
 
 
 

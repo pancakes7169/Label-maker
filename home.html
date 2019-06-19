@@ -40,7 +40,7 @@
             </div>
             <div class="mainContent clearfix">
                 <div class="split left">
-                    <textarea id="help" rows="1" cols="90">    [Use '/h' for help]</textarea>
+                    <textarea id="help" rows="1" cols="90">    [Use '/h' in input feild for help]</textarea>
                     <textarea id="output" autofocus rows="20" cols="85" style="white-space:nowrap;overflow:auto;" ></textarea>
                     <button type="button" onclick="clearOutput()">Clear output</button>
                     <button type="button" onclick="clearAll()">Master Clear</button>
@@ -60,28 +60,50 @@
                     <button type="button" onclick="convertToZPL()">Format ZPL</button>
                     <button type="button" onclick="CreateLabelsAndconvertToZPL()">Enter and format</button>
                     <br /><br />
-                    <label>Testing fuctions:</label>
-                    <button type="button" onclick="printZpl('a')">Print</button>
-                    <button type="button" onclick="loadFileAsText()">Open File</button>
-                    
-                    <button type="button" onclick="testFuction()">test</button>
-
-        
+                    <button type="button" onclick="makeBill()">FormatFill</button>
                     <br /><br />
+                    
                     <label>DateBase:</label>
                     <input id="dataBaseCounter" cols = "100">
                     <button type="button" onclick="claerDatabase()">Clear database</button>
-                    <textarea id="zplOutput" rows="20" cols="90"></textarea>
-                    <p></p>
-                    <button type="button" onclick="copyStringToClipboard()">Copy to clipboard</button>
-                    <p></p>
                     
+                    
+                    <div id="nonSplit">
+                        <textarea id="zplOutput" rows="20" cols="90" style="white-space:nowrap;overflow:auto;"></textarea>
+                        <button type="button" onclick="copyStringToClipboard('zplOutput')">Copy to clipboard</button>
+                        <label id="CopiedLabel">[✓]</label>
+                        <p></p>
+                    </div>
+                    
+                    
+                    
+                    <div id="splitOutput" class="outer">
+                        <div class="innerwrap">
+                            <div class="inner">
+                                <textarea id="subzplOutput1" rows="20" cols="45" style="white-space:nowrap;overflow:auto;"></textarea>
+                                <button type="button" onclick="copyStringToClipboard('subzplOutput1')">Copy to clipboard</button>
+                                <label id="CopiedLabel1">[✓]</label>
+                                <label id="num1">[0]</label>
+                            </div>
+                            <div class="inner">
+                                <textarea id="subzplOutput2" rows="20" cols="45" style="white-space:nowrap;overflow:auto;"></textarea>
+                                <button type="button" onclick="copyStringToClipboard('subzplOutput2')">Copy to clipboard</button>
+                                <label id="CopiedLabel2">[✓]</label>
+                                <label id="num2">[0]</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                   
+                    <!--
                     <label>Dont Press</label>
                     <tr>
                         <td>Select a File to Load:</td>
                         <td><input type="file" id="fileToLoad"></td>
                         <td><button onclick="loadFileAsText()">Load Selected File</button><td>
                     </tr>
+                    -->
                 </div>
                 <div class="split right">
                     <fieldset>
@@ -132,6 +154,7 @@
                     <fieldset>
                     <legend>Other Options:</legend>
                         <div class="otherOptions">
+                            <!--
                             <select id="feild">
                                 <option value="p">P</option>
                                 <option value="1t">1T</option>
@@ -139,14 +162,29 @@
                                 <option value="q">Q</option>
                                 <option value="v">V</option>
                             </select>
+-->
                             <input id="change" value="">
                             <button type="button" onclick="changeAll()">Chagne All</button>
                             <br>
-                            <input type="checkbox" id="MasterLabel">
+                            <input type="checkbox" id="MasterLabel" onclick="outputupdate()">
                             <Label>Include Master Label</Label>
                             <br>
-                            <input type="checkbox" id="altLabelNum">
+                            <input type="checkbox" id="altLabelNum" onclick="outputupdate()" checked>
                             <Label>Use alt. Label Num</Label>
+                            <br>
+                            <input type="checkbox" id="split" onclick="updateSplit()">
+                            <label>Split function:</label>
+                            <input id="splitAt" value = 0>
+                            <br>
+                            <input type="checkbox" id="tripodEntry" onclick="updateSplit()">
+                            <label>Tripod Entry</label>
+                            
+                            
+                            
+                            
+                             <br /><br />
+                            <label>Testing fuctions:</label>
+                            <button type="button" onclick="testFuction()">test</button>
                         </div>
                     </fieldset>
 
@@ -220,7 +258,11 @@
                 changeAll();
             }
         });
-        
+        document.getElementById("splitAt").        addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                convertToZPL();
+            }
+        });
         
         //-------------------------------------------------------------
         document.getElementById("pSL").        addEventListener("keyup", function(event) {
@@ -253,6 +295,7 @@
                 convertToZPL();
             }
         });
+
         
     </script>
     
