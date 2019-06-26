@@ -343,13 +343,22 @@ function cutoff(feild){
 //=============================================
 function makeBill(){
     var n = output.value;
-    var key = n.split("\n");     
+    var key = new Array();
+    var key = n.split("\n");  
+    
+            for (var j = 0; j < key.length; j++){
+            //console.log("Key: " + key[j]);
+        }
     var dataP = new Array();
     var dataQ = new Array();
-    for (var i = 1; i < key.length; i++){
-        var temp = key[i].split(/,?\s+/);
-        var p = temp[2].split("-").join("")
-        var q = temp[4];
+    for (var i = 7; i < key.length-1; i++){
+        var temp = key[i].split("|");//key[i].split(/,?\s+/);
+        for (var j = 0; j < temp.length; j++){
+            //console.log(Temp:temp[j]);
+        }
+        console.log(temp[3]);
+        var p = temp[3].split("-").join("").trim();
+        var q = temp[5];
         if (!p.includes("empty")){
             dataP.push(p);
             dataQ.push(q);
@@ -359,11 +368,14 @@ function makeBill(){
 }
 
 function formatBill(dataP, dataQ){
+    var totalPallets = 0;
+    var totalWeight = 0;
     println("------------");
     println("\nBill of landing");
     //Search for dupe partNums
     for (var i = 0; i < dataP.length; i++){
         var n = dataP[i];
+        console.log("N: " + n);
         var count = 1;
         for (var j = i+1; j < dataP.length; j++){
             if (dataP[j] === n){
@@ -373,6 +385,7 @@ function formatBill(dataP, dataQ){
         }
         //Search for dup partnums 1
         //console.log("i:" + i + " Count: " + count)
+        totalPallets += count;
         print("[" + count + "]" + "\t" + n);
         var n2 = dataQ[i];
         var count2 = 0;
@@ -385,7 +398,8 @@ function formatBill(dataP, dataQ){
                 otherNums.push(dataQ[j]);
             }
         }
-        println("\t[" + count2 + "]" + "\tQ:" + n2 + "\t| " + lookUpWeight(n,n2,count2));
+        //totalWeight += parseInt(lookUpWeight(n,n2,count2));
+        println("\t\t[" + count2 + "]" + "\tQ:" + n2 + "\t| " + lookUpWeight(n,n2,count2));
         for (var k = 0; k < otherNums.length; k++){
             var num = otherNums[k];
             var count3 = 0;
@@ -395,10 +409,11 @@ function formatBill(dataP, dataQ){
                     k = a;
                 }
             }
-            println("\t\t\t[" + count3 + "]\tQ:" + num + "\t| " + lookUpWeight(n,num,count3));
+            //totalWeight += parseInt(lookUpWeight(n,num,count3));
+            println("\t\t\t\t[" + count3 + "]\tQ:" + num + "\t| " + lookUpWeight(n,num,count3));
         }
     }
-    
+    println("Total pallets: [" + totalPallets + "]    Total weight: [" + totalWeight +  "]");
     output.scrollLeft = 0;
 
 }

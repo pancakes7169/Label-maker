@@ -175,12 +175,37 @@ function testFuction(){
     //var testLabel = new label("[)>@06@12S0001@1P5500038641@PA2C02517500@31PA2C02517500@20P@2PE  @Q60@16K0@V8327468@3SSp0000000ef73    @20T0101@15D19122025@9DD20190115@1T19A14EG@ZN @1Z000000163@@");
     //console.log(testLabel.toStringC());
     console.log("Start of 'testFucntion()'");
+    
+    var n = "|251|TRANSIT-C1|A2-C733-1280-0-00   |2054|      720 |      720 |        0 |        0 |USEG000170429  | |K|353382    |      | 140648175|06/20/2019|3108870768|10:31:07|";
+    var stringArr = n.split('|');
+     for (var j = 0; j < stringArr.length; j++){
+            console.log(stringArr[j]);
+        }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     var n = zplOutput.value;
-    var key = n.split("\n");              console.log("k:" + key.length);
+    var key = n.split("\n");              //console.log("k:" + key.length);
     var dataP = new Array();
     var dataQ = new Array();
-    for (var i = 1; i < key.length; i++){
-        var temp = key[i].split(/,?\s+/);
+    for (var i = 7; i < key.length; i++){
+        var temp = key[i].split("|");
+         for (var j = 0; j < temp.length; j++){
+            //console.log(temp[i]);
+        }
         //var p = temp[2].replaceAll("-","");
         var p = temp[2].split("-").join("")
         var q = temp[4];
@@ -189,7 +214,7 @@ function testFuction(){
             dataQ.push(q);
         }
     }
-    formatBill(dataP,dataQ);
+    //formatBill(dataP,dataQ);
     
 
     console.log("--------------");
@@ -197,8 +222,8 @@ function testFuction(){
         //console.log(dataP[i] + " " + dataQ[i]);
     }
 }
-
-/*function formatBill(dataP, dataQ){
+/*
+function formatBill(dataP, dataQ){
     println("Bill of landing");
     //Search for dupe partNums
     for (var i = 0; i < dataP.length; i++){
@@ -257,7 +282,7 @@ function lookUpWeight(p,q,c){
 }
     
                 
-  /*            
+     */         
 
 
 /*
