@@ -9,9 +9,14 @@
         <h1>Vender List</h1>
         <script>createTable(venderList);</script>
         <a style="float: right" href="home.html"><p>Go back</p></a> 
-        <p>v5.31?</p>
+        <p id="vederListVerson"></p>
     </body>
     <style>
         table td:nth-child(1){ display:none;} 
     </style>
+    <script>
+        window.onload = function(){
+        document.getElementById('vederListVerson').innerHTML = venderListDate;
+        };
+    </script>
 </html>

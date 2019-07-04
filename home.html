@@ -60,7 +60,14 @@
                     <button type="button" onclick="convertToZPL()">Format ZPL</button>
                     <button type="button" onclick="CreateLabelsAndconvertToZPL()">Enter and format</button>
                     <br /><br />
-                    <button type="button" onclick="makeBill()">FormatFill</button>
+                    <button type="button" onclick="makeBill()">Format bill</button>
+                    
+                    <button type="button" onclick="makeStringLabel()">Make String Label</button>
+                    <select id="labelType">
+                                <option value="0">Master</option>
+                                <option value="1">Master w/ label</option>
+                                <option value="2">Normal</option>
+                            </select>
                     <br /><br />
                     
                     <label>DateBase:</label>
@@ -179,9 +186,11 @@
                             <input type="checkbox" id="tripodEntry" onclick="updateSplit()">
                             <label>Tripod Entry</label>
                             
+
                             
                             
                             
+                             
                              <br /><br />
                             <label>Testing fuctions:</label>
                             <button type="button" onclick="testFuction()">test</button>

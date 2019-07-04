@@ -10,6 +10,11 @@
         <p>Par number with an * stay in the Conti Wearhouse</p>
         <script>createTable(kanban);</script>
         <a style="float: right" href="home.html"><p>Go back</p></a> 
-        <p>v6.12</p>
+        <p id="kanbanVerson"></p>
     </body>
+    <script>
+        window.onload = function(){
+        document.getElementById('kanbanVerson').innerHTML = kanbanDate;
+        };
+    </script>
 </html>

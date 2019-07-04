@@ -194,6 +194,7 @@ function outputupdate(){
         convertToZPL();
     }
 }
+
 function claerDatabase(){
     labelData =[];
     dataBaseCounter.value = labelData.length + " Lables";
@@ -430,6 +431,18 @@ function lookUpWeight(p,q,c){
         }
     }
     return "X";
+}
+
+function makeStringLabel(){
+    var type = document.getElementById("labelType").value;
+    var data = output.value.split('\n');
+    if (type == 0){
+       zplOutput.value = "${^XA^FO200,550^AQR36,20\n^FD\n^FS ^FO30,600^BXR,3,200,48,48,~\n^FD\n" + data[1] + "\n^FS}$"; 
+    }else if (type == 1){
+       zplOutput.value = "${^XA^FO400,60^AQR36,20^FD\n" + data[0] + "\n^FS^FO200,550^AQR36,20^FD^FS ^FO30,600^BXR,3,200,48,48,~^FD\n" + data[1] + "\n^FS}$";    
+    }else if (type == 2){
+       zplOutput.value = "${^XA^FO400,60^AQR36,20^FD\n" + data[0] + "\n^FS^FO345,60^BY2,3.0,10^BCR,55,N,N,N^FD\n" + data[1] + "^\n^FS}$";      
+    }
 }
     
 
