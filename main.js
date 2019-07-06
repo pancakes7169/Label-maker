@@ -376,7 +376,7 @@ function formatBill(dataP, dataQ){
     //Search for dupe partNums
     for (var i = 0; i < dataP.length; i++){
         var n = dataP[i];
-        console.log("N: " + n);
+        //console.log("N: " + n);
         var count = 1;
         for (var j = i+1; j < dataP.length; j++){
             if (dataP[j] === n){
@@ -397,21 +397,29 @@ function formatBill(dataP, dataQ){
                 count2++;
             }else{
                 otherNums.push(dataQ[j]);
+                console.log("new Num found: " + dataQ[j]);
             }
         }
-        //totalWeight += parseInt(lookUpWeight(n,n2,count2));
-        println("\t\t[" + count2 + "]" + "\tQ:" + n2 + "\t| " + lookUpWeight(n,n2,count2));
+         for (var a = 0; a < otherNums.length; a++){
+             console.log("Other nums: " + otherNums[a]);
+         }
+        totalWeight += parseInt(lookUpWeight(n,n2,count2,2));
+        println("\t\t[" + count2 + "]" + "\tQ:" + n2 + "\t| " + lookUpWeight(n,n2,count2,1));
         for (var k = 0; k < otherNums.length; k++){
+            console.log ("K: " + k);
             var num = otherNums[k];
             var count3 = 0;
-            for (var a = i+1-count; a < count+i; a++){
+            console.log("Current num: " + num);
+            for (var a = i-count2-1+k; a < count2+i; a++){
+                console.log("a: " + a + " " + dataQ[a]);
                 if (dataQ[a] === num){
                     count3++;
                     k = a;
+                    
                 }
             }
-            //totalWeight += parseInt(lookUpWeight(n,num,count3));
-            println("\t\t\t\t[" + count3 + "]\tQ:" + num + "\t| " + lookUpWeight(n,num,count3));
+            totalWeight += parseInt(lookUpWeight(n,num,count3,2));
+            println("\t\t\t\t[" + count3 + "]\tQ:" + num + "\t| " + lookUpWeight(n,num,count3,1));
         }
     }
     println("Total pallets: [" + totalPallets + "]    Total weight: [" + totalWeight +  "]");
@@ -419,19 +427,27 @@ function formatBill(dataP, dataQ){
 
 }
 
-function lookUpWeight(p,q,c){
+function lookUpWeight(p,q,c,n){
     console.log(">" + p + " " + q + " " + c);
     for (var i = 0; i < weightList.length; i++){
         if (weightList[i][1] === p){
-            console.log("Part Num found" + weightList[i][2]);
-            if (weightList[i][2] == q){
-                console.log("Quanity found");
-                return "W: " + weightList[i][4] + "Lbs T: " + weightList[i][4]*c + "lbs V:" + weightList[i][3];
+            //console.log("Part Num weight found: " + weightList[i][2]);
+            if (weightList[i][2] == q.replace(',','')){
+                //console.log("Quanity found");
+                if (n == 1){
+                  return "W: " + weightList[i][4] + "Lbs T: " + weightList[i][4]*c + "lbs V:" + weightList[i][3];  
+                }else if (n == 2){
+                   return weightList[i][4]*c; 
+                }
+                
+                
             }
         }
     }
     return "X";
 }
+
+
 
 function makeStringLabel(){
     var type = document.getElementById("labelType").value;
