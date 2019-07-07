@@ -397,28 +397,31 @@ function formatBill(dataP, dataQ){
                 count2++;
             }else{
                 otherNums.push(dataQ[j]);
-                console.log("new Num found: " + dataQ[j]);
+                //console.log("new Num found: " + dataQ[j]);
             }
         }
-         for (var a = 0; a < otherNums.length; a++){
-             console.log("Other nums: " + otherNums[a]);
-         }
-        totalWeight += parseInt(lookUpWeight(n,n2,count2,2));
+        var tempWeight = parseInt(lookUpWeight(n,n2,count2,2));
+        totalWeight += ((!isNaN(tempWeight)) ? tempWeight : 0); 
+        console.log("TW: " + totalWeight);
+        //console.log(parseInt(lookUpWeight(n,n2,count3,2)));
         println("\t\t[" + count2 + "]" + "\tQ:" + n2 + "\t| " + lookUpWeight(n,n2,count2,1));
         for (var k = 0; k < otherNums.length; k++){
-            console.log ("K: " + k);
+            //console.log ("K: " + k);
             var num = otherNums[k];
             var count3 = 0;
-            console.log("Current num: " + num);
-            for (var a = i-count2-1+k; a < count2+i; a++){
-                console.log("a: " + a + " " + dataQ[a]);
+            //console.log("Current num: " + num + " Other nums: " + count + " I: " + i);
+            for (var a = i-count+1; a < i+1; a++){
+                //console.log("a: " + a + " " + dataQ[a]);
                 if (dataQ[a] === num){
                     count3++;
-                    k = a;
+                    k = a-2;
                     
                 }
             }
-            totalWeight += parseInt(lookUpWeight(n,num,count3,2));
+            var tempWeight = parseInt(lookUpWeight(n,num,count3,2));
+            totalWeight += ((!isNaN(tempWeight)) ? tempWeight : 0); 
+            console.log("TW: " + totalWeight);
+            //console.log(parseInt(lookUpWeight(n,num,count3,2)));
             println("\t\t\t\t[" + count3 + "]\tQ:" + num + "\t| " + lookUpWeight(n,num,count3,1));
         }
     }
@@ -437,6 +440,7 @@ function lookUpWeight(p,q,c,n){
                 if (n == 1){
                   return "W: " + weightList[i][4] + "Lbs T: " + weightList[i][4]*c + "lbs V:" + weightList[i][3];  
                 }else if (n == 2){
+                    console.log("Weight: " + weightList[i][4]*c);
                    return weightList[i][4]*c; 
                 }
                 
