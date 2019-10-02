@@ -6,7 +6,8 @@ var users = [
   [-1,"1st Shift",""],
   [2,"12507","Mundo Molina Jr"],
   [-1,"A-Shift",""],
-  [2,"13200","Timothy Laferriere"],
+  [1,"13200","Timothy Laferriere"],
+  [1,"50021","Jose Armendariz"],
   [-1,"",""],
   [-1,"B-Shift",""],
   [2,"12052","Juliant Martinez"],
@@ -18,9 +19,12 @@ var users = [
 ];
 
 function checkBage(n){
+    console.log(n);
     for (var i = 0; i < users.length; i++){
         if (-1 != users[i][0]){
            if (n == users[i][1]){
+               console.log("User found!");
+               
                switch (users[i][0]){
                    case 0 : document.getElementById('status').innerHTML = "User: " +            users[i][2] + " found but login has been blocked by the              system"; break;
                    case 1 : localStorage.setItem("bageNum" , users[i][1]);
