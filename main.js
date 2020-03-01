@@ -438,17 +438,17 @@ function lookUpWeight(p,q,c,n){ //Partnumber, Quanity, #of boxes, Dont know
     for (var i = 0; i < weightList.length; i++){
         if (weightList[i][1] === p){
             //console.log("Part Num weight found: " + weightList[i][2]);
-            if (weightList[i][2] == q.replace(',','')){
+            //if (weightList[i][2] == q.replace(',','')){
                 //console.log("Quanity found");
                 if (n == 1){
-                  return "Q:" + weightList[i][2] +  "\tW: " + weightList[i][4] + "Lbs T: " + weightList[i][4]*c + "lbs V:" + weightList[i][3];  
+                  return " " + weightList[i][2] +  "\tW: " + weightList[i][4] + "\tT: " + weightList[i][4]*c + "lbs \tV:" + weightList[i][3];  
                 }else if (n == 2){
                     console.log("Weight: " + weightList[i][4]*c);
                    return weightList[i][4]*c; 
                 }
                 
                 
-            }
+            //}
         }
     }
     return "X";
