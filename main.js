@@ -393,6 +393,8 @@ function formatBill(dataP, dataQ){
         var otherNums = new Array();
         for (var j = i-count+1; j < i+1; j++){
             //console.log("j:" + j);
+			//count2++;
+			//This block finds parts with differnt Quanitys 
             if (dataQ[j] === n2){
                 count2++;
             }else{
@@ -404,8 +406,9 @@ function formatBill(dataP, dataQ){
         totalWeight += ((!isNaN(tempWeight)) ? tempWeight : 0); 
         console.log("TW: " + totalWeight);
         //console.log(parseInt(lookUpWeight(n,n2,count3,2)));
-        println("\t\t[" + count2 + "]" + "\tQ:" + n2 + "\t| " + lookUpWeight(n,n2,count2,1));
-        for (var k = 0; k < otherNums.length; k++){
+        //println("\t\t[" + count2 + "]" + "\tQ:" + n2 + "\t| " + lookUpWeight(n,n2,count2,1));
+        println("\t[" + count2 + "] Q:" + n2 + "| " + lookUpWeight(n,n2,count2,1));
+		for (var k = 0; k < otherNums.length; k++){
             //console.log ("K: " + k);
             var num = otherNums[k];
             var count3 = 0;
@@ -422,7 +425,7 @@ function formatBill(dataP, dataQ){
             totalWeight += ((!isNaN(tempWeight)) ? tempWeight : 0); 
             console.log("TW: " + totalWeight);
             //console.log(parseInt(lookUpWeight(n,num,count3,2)));
-            println("\t\t\t\t[" + count3 + "]\tQ:" + num + "\t| " + lookUpWeight(n,num,count3,1));
+            println("\t\t\t[" + count3 + "] Q:" + num + "| " + lookUpWeight(n,num,count3,1));
         }
     }
     println("Total pallets: [" + totalPallets + "]    Total weight: [" + totalWeight +  "]");
@@ -430,7 +433,7 @@ function formatBill(dataP, dataQ){
 
 }
 
-function lookUpWeight(p,q,c,n){
+function lookUpWeight(p,q,c,n){ //Partnumber, Quanity, #of boxes, Dont know 
     console.log(">" + p + " " + q + " " + c);
     for (var i = 0; i < weightList.length; i++){
         if (weightList[i][1] === p){
@@ -438,7 +441,7 @@ function lookUpWeight(p,q,c,n){
             if (weightList[i][2] == q.replace(',','')){
                 //console.log("Quanity found");
                 if (n == 1){
-                  return "W: " + weightList[i][4] + "Lbs T: " + weightList[i][4]*c + "lbs V:" + weightList[i][3];  
+                  return "Q:" + weightList[i][2] +  "\tW: " + weightList[i][4] + "Lbs T: " + weightList[i][4]*c + "lbs V:" + weightList[i][3];  
                 }else if (n == 2){
                     console.log("Weight: " + weightList[i][4]*c);
                    return weightList[i][4]*c; 
