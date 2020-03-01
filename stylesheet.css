@@ -208,6 +208,7 @@ header {
     text-align: center;
     background-color: #808080;
     height: 80px;
+	margin-top:90px;
 }
 .bodyNavButtons > div {
     height: 180px;
