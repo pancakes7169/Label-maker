@@ -202,7 +202,7 @@ var venderList = [
 
 var weightListDate = "v04.21"; //Updated 10.5
 var weightList = [
-  [Same,"Part Number",Qty,"Vender",Weight],
+  ["Same","Part Number","Qty","Vender","Weight"],
   [0,"2.84105E+12",162,"Metal Technology",500],
   [1,"2841074301100",128,"Nedec",450],
   [1,"2841074301100",192,"Twin City",550],
