@@ -7,6 +7,7 @@ function label(a) {
     var d = "";
     var q = "";
     var v = "";
+	var s = "";
     
     
     this.formatLabel = function(n){
@@ -24,6 +25,7 @@ function label(a) {
                 d = this.extract(n,"9D"); 
                 q = this.extract(n,"Q");
                 v = this.extract(n,"V");
+				s = this.extract(n,"S");
             }//Defalut
             if (intProfile == 1) {//Custom
                 n = n.toUpperCase();
@@ -117,6 +119,7 @@ function label(a) {
         if(!d.startsWith("9D") && d != "") d = "9D" + d;
         if(!q.startsWith("Q")  && q != "") q = "Q" + q;
         if(!v.startsWith("V")  && v != "") v = "V" + v;
+		if(!s.startsWith("S")  && s != "") s = "S" + s;
     }
     
     this.correctPartNum = function(n){
@@ -208,11 +211,12 @@ function label(a) {
         var d1 = "\n9D: " + d;
         var e1 = "\nQ:  " + q;
         var f1 = "\nV:  " + v;
-        return (a1 + b1 + c1 + d1 + e1 + f1 + "");
+		var g1 = "\nS:  " + S;
+        return (a1 + b1 + c1 + d1 + e1 + f1 + g1 + "");
     };
     
     this.checkForNull = function(){
-        if (p === "" && t === "" && d === "" && q === "" && v === "")
+        if (p === "" && t === "" && d === "" && q === "" && v === "" && s === "")
             return true;
         return false;
         
@@ -243,11 +247,17 @@ function label(a) {
         a[10] = "^FS\n^FO245,540^BY2,3.0,10^BCR,55,N,N,N^FDV" +this.cutFront(v,1); 
     	a[11] = "^FS\n^FO200,550^AQR36,20^FDUSER  " +  u; 
         a[12] = " " + (index+1);
-    	a[13] = "^FS";
-        a[14] = "\n^FO30,600^BXR,3,200,48,48,~^FD\n" + m + "^FS";
-        a[15] = "\n^XZ";
+    	a[13] = "^FS\n";
+		a[14] = "\n^FO75,60^AQR36,20^FDSUID" + this.cutFront(s,1);
+		a[15] = "^FS\n^FO20,60^BY2,3.0,10^BCR,55,N,N,N^FDS" + s;
+        a[16] = "\n^FO30,600^BXR,3,200,48,48,~^FD\n" + m + "^FS";
+        a[17] = "\n^XZ";
+		if (s == ""){
+			a[14] = "";
+			a[15] = "";
+		}
         if (document.getElementById('MasterLabel').checked == false){
-            a[14] = "";
+            a[16] = "";
         }
         if (document.getElementById('altLabelNum').checked == false){
             a[0] = a[0].substr(0,26);
@@ -259,7 +269,7 @@ function label(a) {
         }
         if (index == -1){
             a[12] = "";
-            a[15] = "";
+            a[17] = "";
         }
         var r = "";
         for (var i = 0; i < a.length; i++){
@@ -274,12 +284,14 @@ function label(a) {
     this.setD = function(n) { d = n.toUpperCase(); };
     this.setQ = function(n) { q = n.toUpperCase(); };
     this.setV = function(n) { v = n.toUpperCase(); };
+	this.setS = function(n) { s = n.toUpperCase(); };
 
     this.getP = function() { return p; };
     this.getT = function() { return t; };
     this.getD = function() { return d; };
     this.getQ = function() { return q; };
     this.getV = function() { return v; };
+	this.getS = function() { return s; };
     
     this.formatLabel(n);
 } 
