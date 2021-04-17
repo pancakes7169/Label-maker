@@ -1,14 +1,11 @@
-<html><head><link rel="StyleSheet" href="stylesheet.css">
+<!DOCTYPE html>
+<html>
+    <link rel="StyleSheet" href="stylesheet.css">
     <script type="text/javascript" src="main.js"></script>
     <script type="text/javascript" src="label.js"></script>
     <script type="text/javascript" src="functions.js"></script>
     <script type="text/javascript" src="data.js"></script>
-    <style id="__web-inspector-hide-shortcut-style__">
-.__web-inspector-hide-shortcut__, .__web-inspector-hide-shortcut__ *, .__web-inspector-hidebefore-shortcut__::before, .__web-inspector-hideafter-shortcut__::after
-{
-    visibility: hidden !important;
-}
-</style></head><body onload="onLoadBody()" class="body" id="body"><div class="wrapper">
+    <div class="wrapper">
     <title>Lable Maker</title>
     <header>
         <nav>
@@ -26,8 +23,7 @@
             </ul>
         </nav>
     </header>
-	
-<!--     <div class="headerImage">
+    <div class="headerImage">
         <div class="headerText">
             <h1 class="h1">Traceability label maker</h1>
             <h5 class="h5">Questiongs on how to use the program please click the link below.</h5>
@@ -36,22 +32,22 @@
                 <a href="unabliable.html"><li>Report an issue</li></a>
             </div>
         </div>
-    </div> -->
-    
+    </div>
+    <body onload="onLoadBody()" class="body" id="body">
         <div class="body">
             <div class="bodyHeader">
                 <h2>Console</h2>
             </div>
             <div class="mainContent clearfix">
                 <div class="split left">
-                    <textarea id="help" rows="1" cols="90" readonly="">    [Use '/h' in input feild for help]</textarea>
-                    <textarea id="output" autofocus="" rows="20" cols="85" style="white-space:nowrap;overflow:auto;"></textarea>
+                    <textarea id="help" rows="1" cols="90">    [Use '/h' in input feild for help]</textarea>
+                    <textarea id="output" autofocus rows="20" cols="85" style="white-space:nowrap;overflow:auto;" ></textarea>
                     <button type="button" onclick="clearOutput()">Clear output</button>
                     <button type="button" onclick="clearAll()">Master Clear</button>
-                    <br><br>
+                    <br /><br />
                     <!--<textarea id="input"  rows="1" cols="100"></textarea>-->
                     <label>Input:</label>
-                    <input id="input" cols="100">
+                    <input id="input" cols = "100">
                     <label>Select Profile:</label>
                     <select id="profile">
                         <option value="0">Default</option>
@@ -59,11 +55,11 @@
                         <option value="2">Bortech</option>
                         <option value="3">Dynamic</option>
                     </select>
-                    <br><br>
+                    <br /><br />
                     <button type="button" onclick="enterData()">Enter data to dataBase</button>
                     <button type="button" onclick="convertToZPL()">Format ZPL</button>
                     <button type="button" onclick="CreateLabelsAndconvertToZPL()">Enter and format</button>
-                    <br><br>
+                    <br /><br />
                     <button type="button" onclick="makeBill()">Format bill</button>
                     
                     <button type="button" onclick="makeStringLabel()">Make String Label</button>
@@ -72,34 +68,34 @@
                                 <option value="1">Master w/ label</option>
                                 <option value="2">Normal</option>
                             </select>
-                    <br><br>
+                    <br /><br />
                     
                     <label>DateBase:</label>
-                    <input id="dataBaseCounter" cols="100" readonly="">
+                    <input id="dataBaseCounter" cols = "100">
                     <button type="button" onclick="claerDatabase()">Clear database</button>
                     
                     
-                    <div id="nonSplit" style="display: block;">
+                    <div id="nonSplit">
                         <textarea id="zplOutput" rows="20" cols="90" style="white-space:nowrap;overflow:auto;"></textarea>
                         <button type="button" onclick="copyStringToClipboard('zplOutput')">Copy to clipboard</button>
-                        <label id="CopiedLabel" style="display: none;">[✓]</label>
+                        <label id="CopiedLabel">[✓]</label>
                         <p></p>
                     </div>
                     
                     
                     
-                    <div id="splitOutput" class="outer" style="display: none;">
+                    <div id="splitOutput" class="outer">
                         <div class="innerwrap">
                             <div class="inner">
                                 <textarea id="subzplOutput1" rows="20" cols="45" style="white-space:nowrap;overflow:auto;"></textarea>
                                 <button type="button" onclick="copyStringToClipboard('subzplOutput1')">Copy to clipboard</button>
-                                <label id="CopiedLabel1" style="display: none;">[✓]</label>
+                                <label id="CopiedLabel1">[✓]</label>
                                 <label id="num1">[0]</label>
                             </div>
                             <div class="inner">
                                 <textarea id="subzplOutput2" rows="20" cols="45" style="white-space:nowrap;overflow:auto;"></textarea>
                                 <button type="button" onclick="copyStringToClipboard('subzplOutput2')">Copy to clipboard</button>
-                                <label id="CopiedLabel2" style="display: none;">[✓]</label>
+                                <label id="CopiedLabel2">[✓]</label>
                                 <label id="num2">[0]</label>
                             </div>
                         </div>
@@ -124,21 +120,22 @@
                         
                             <div class="center">
                                 <label>Input: </label>
-                                <input id="singelInput" cols="10">
-                                <button type="button" id="leftScroll" onclick="leftOne()" style="opacity: 0.5; background-color: gray;">left</button>
+                                <input id="singelInput" cols = "10">
+                                <button type="button" id ="leftScroll" onclick="leftOne()">left</button>
                                 <label>Label:</label>
-                                <input id="scroll" cols="10" value="0">
-                                <input id="scrollShow" cols="10" value="1">
-                                <button type="button" id="rightScroll" onclick="rightOne()" style="opacity: 0.5; background-color: gray;">Right</button>
+                                <input id="scroll" cols = "10" value="0">
+                                <input id="scrollShow" cols = "10" value="1">
+                                <button type="button" id ="rightScroll" onclick="rightOne()">Right</button>
                             </div>
                             <div>
-                                <br>
-                                <label>P :</label> <input id="pSL" onkeyup="updateSidePartNum()"><label id="SideP">|</label><br>
-                                <label>1T:</label> <input id="tSL"><label id="SideT">|</label><br>
-                                <label>9D:</label> <input id="dSL"><label id="SideD">|</label><br>
-                                <label>Q :</label> <input id="qSL"><label id="SideQ">|</label><br>
-                                <label>V :</label> <input id="vSL" onkeyup="upadateSideVender()"><label id="SideV" title="Null">|</label><br>
-                                <br>
+                                <br />
+                                <label>P :</label> <input id="pSL" onkeyup="updateSidePartNum()"><label id="SideP">|</label><br />
+                                <label>1T:</label> <input id="tSL"><label id="SideT">|</label><br />
+                                <label>9D:</label> <input id="dSL"><label id="SideD">|</label><br />
+                                <label>Q :</label> <input id="qSL"><label id="SideQ">|</label><br />
+                                <label>V :</label> <input id="vSL" onkeyup="upadateSideVender()"><label id="SideV" title="Null">|</label><br />
+								<label>S :</label> <input id="sSL"><label id="SideS">|</label><br />
+                                <br />
                                 <button type="button" onclick="clearSingeLabelFeilds()">Clear</button>
                                 <button type="button" onclick="printSingleLabel()">Make single Label</button>
                                 <button type="button" onclick="addLabel()">Add Label</button>
@@ -148,14 +145,14 @@
                     <fieldset>
                         <legend>Custom Label autibutes:</legend>
                         <div class="customLable">
-                            <label>P :</label> <input id="p" value="@P"> <input id="p2" value="@"><br>
+                            <label>P :</label> <input id="p" value="@P"> <input id="p2"  value="@"><br />
                             <label>1T:</label> <input id="t" value="@1T">  <input id="t2" value="@"> <input type="checkbox" id="use1tMult"> 
-                            <input id="2t" value="@2T"> <input id="2t2" value="@"><br>
+                            <input id="2t" value="@2T"> <input id="2t2" value="@"><br />
                             <label>9D:</label> <input id="d" value="@9D">  <input id="d2" value="@"> <input type="checkbox" id="use9dMult"> 
-                            <input id="2d" value="@9D">  <input id="2d2" value="@"><br>
-                            <label>Q :</label> <input id="q" value="@Q">   <input id="q2" value="@"><br>
-                            <label>V :</label> <input id="v" value="@V">   <input id="v2" value="@"><br>
-                            <br>
+                            <input id="2d" value="@9D">  <input id="2d2" value="@"><br />
+                            <label>Q :</label> <input id="q" value="@Q">   <input id="q2" value="@"><br />
+                            <label>V :</label> <input id="v" value="@V">   <input id="v2" value="@"><br />
+                            <br />
                             <button type="button" onclick="resetCustomLabel()">Reset</button>
                             <button type="button" onclick="clearAtSymbol()">Clear @</button>
                             <input type="checkbox" id="copy1t9d"> 
@@ -178,14 +175,14 @@
                             <button type="button" onclick="changeAll()">Chagne All</button>
                             <br>
                             <input type="checkbox" id="MasterLabel" onclick="outputupdate()">
-                            <label>Include Master Label</label>
+                            <Label>Include Master Label</Label>
                             <br>
-                            <input type="checkbox" id="altLabelNum" onclick="outputupdate()" checked="">
-                            <label>Use alt. Label Num</label>
+                            <input type="checkbox" id="altLabelNum" onclick="outputupdate()" checked>
+                            <Label>Use alt. Label Num</Label>
                             <br>
                             <input type="checkbox" id="split" onclick="updateSplit()">
                             <label>Split function:</label>
-                            <input id="splitAt" value="0">
+                            <input id="splitAt" value = 0>
                             <br>
                             <input type="checkbox" id="tripodEntry" onclick="updateSplit()">
                             <label>Tripod Entry</label>
@@ -195,7 +192,7 @@
                             
                             
                              
-                             <br><br>
+                             <br /><br />
                             <label>Testing fuctions:</label>
                             <button type="button" onclick="testFuction()">test</button>
                         </div>
@@ -215,17 +212,10 @@
             <div class="bodyHeader"></div>
         </div>
         
-    
+    </body>
     <footer class="clearfix">
         <div class="LeftFooter">
   
-        </div>
-        <div class="contentBlock">
-            <h3>Scsi [Offsite]</h3>
-            <ul class="noBullets">
-                <li>2348 Fm 464, </li>
-                <li>Seguin, TX 78155</li>
-            </ul>
         </div>
         <div class="contentBlock">
             <h3>Contiental USA</h3>
@@ -237,7 +227,6 @@
         <div class="copyright">Label Maker made by 'PanCaeks7169'</div>
         
 
-    
  
 
  
@@ -320,5 +309,4 @@
         
     </script>
     
-
-</body></html>
+</html>
