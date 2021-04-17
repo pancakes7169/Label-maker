@@ -230,6 +230,7 @@ function diplayLabelData(i,temp){
     document.getElementById("dSL").value = labelData[i].getD();
     document.getElementById("qSL").value = labelData[i].getQ();
     document.getElementById("vSL").value = labelData[i].getV();
+	document.getElementById("sSL").value = labelData[i].getS();
     
     //document.getElementById("SideV").value = SearchVerderList(labelData[i].getV());
     updateScrollButtons();
@@ -241,6 +242,7 @@ function savePreivousLabel(i){
     labelData[i].setD(document.getElementById("dSL").value);
     labelData[i].setQ(document.getElementById("qSL").value);
     labelData[i].setV(document.getElementById("vSL").value);
+	labelData[i].setS(document.getElementById("sSL").value);
 }
 
 //Kanban, weight, and vender info
@@ -393,8 +395,6 @@ function formatBill(dataP, dataQ){
         var otherNums = new Array();
         for (var j = i-count+1; j < i+1; j++){
             //console.log("j:" + j);
-			//count2++;
-			//This block finds parts with differnt Quanitys 
             if (dataQ[j] === n2){
                 count2++;
             }else{
@@ -406,9 +406,8 @@ function formatBill(dataP, dataQ){
         totalWeight += ((!isNaN(tempWeight)) ? tempWeight : 0); 
         console.log("TW: " + totalWeight);
         //console.log(parseInt(lookUpWeight(n,n2,count3,2)));
-        //println("\t\t[" + count2 + "]" + "\tQ:" + n2 + "\t| " + lookUpWeight(n,n2,count2,1));
-        println("\t[" + count2 + "] Q:" + n2 + "| " + lookUpWeight(n,n2,count2,1));
-		for (var k = 0; k < otherNums.length; k++){
+        println("\t\t[" + count2 + "]" + "\tQ:" + n2 + "\t| " + lookUpWeight(n,n2,count2,1));
+        for (var k = 0; k < otherNums.length; k++){
             //console.log ("K: " + k);
             var num = otherNums[k];
             var count3 = 0;
@@ -425,7 +424,7 @@ function formatBill(dataP, dataQ){
             totalWeight += ((!isNaN(tempWeight)) ? tempWeight : 0); 
             console.log("TW: " + totalWeight);
             //console.log(parseInt(lookUpWeight(n,num,count3,2)));
-            println("\t\t\t[" + count3 + "] Q:" + num + "| " + lookUpWeight(n,num,count3,1));
+            println("\t\t\t\t[" + count3 + "]\tQ:" + num + "\t| " + lookUpWeight(n,num,count3,1));
         }
     }
     println("Total pallets: [" + totalPallets + "]    Total weight: [" + totalWeight +  "]");
@@ -433,22 +432,22 @@ function formatBill(dataP, dataQ){
 
 }
 
-function lookUpWeight(p,q,c,n){ //Partnumber, Quanity, #of boxes, Dont know 
+function lookUpWeight(p,q,c,n){
     console.log(">" + p + " " + q + " " + c);
     for (var i = 0; i < weightList.length; i++){
         if (weightList[i][1] === p){
             //console.log("Part Num weight found: " + weightList[i][2]);
-            //if (weightList[i][2] == q.replace(',','')){
+            if (weightList[i][2] == q.replace(',','')){
                 //console.log("Quanity found");
                 if (n == 1){
-                  return " " + weightList[i][2] +  "\tW: " + weightList[i][4] + "\tT: " + weightList[i][4]*c + "lbs \tV:" + weightList[i][3];  
+                  return "W: " + weightList[i][4] + "Lbs T: " + weightList[i][4]*c + "lbs V:" + weightList[i][3];  
                 }else if (n == 2){
                     console.log("Weight: " + weightList[i][4]*c);
                    return weightList[i][4]*c; 
                 }
                 
                 
-            //}
+            }
         }
     }
     return "X";
@@ -559,12 +558,14 @@ function setSingleLabel(){
     singleLabel.setD(document.getElementById("dSL").value);
     singleLabel.setQ(document.getElementById("qSL").value);
     singleLabel.setV(document.getElementById("vSL").value);
+	singleLabel.setS(document.getElementById("sSL").value);
     singleLabel.fixLabel();
     document.getElementById("pSL").value = singleLabel.getP();
     document.getElementById("tSL").value = singleLabel.getT();
     document.getElementById("dSL").value = singleLabel.getD();
     document.getElementById("qSL").value = singleLabel.getQ();
     document.getElementById("vSL").value = singleLabel.getV();
+	document.getElementById("sSL").value = singleLabel.getS();
 }
 
 function printSingleLabel(){
@@ -574,6 +575,7 @@ function printSingleLabel(){
     singleLabel.setD(document.getElementById("dSL").value);
     singleLabel.setQ(document.getElementById("qSL").value);
     singleLabel.setV(document.getElementById("vSL").value);
+	singleLabel.setS(document.getElementById("sSL").value);
     if (username.value === ""){
         //getUsername();
     }
@@ -595,6 +597,7 @@ function addLabel(){
         print(singleLabel.getD() + "@");
         print(singleLabel.getQ() + "@");
         print(singleLabel.getV() + "@");  
+		print(singleLabel.getS() + "@");  
     //}
     print("@");
     println("");
@@ -627,6 +630,8 @@ function changeAll(){
                         labelData[i].setQ(n); break;
             case "v"  : if (!n.startsWith("v")) n = "V" + n;
                         labelData[i].setV(n); break;
+			case "s"  : if (!n.startsWith("s")) n = "S" + n;
+                        labelData[i].setS(n); break;
             default   : console.log("Err: Chagne all defalut statement reached");
         }
     }
