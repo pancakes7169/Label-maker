@@ -92,6 +92,7 @@ function clearSingeLabelFeilds(){
     document.getElementById("dSL").value = "";
     document.getElementById("qSL").value = "";
     document.getElementById("vSL").value = "";
+	document.getElementById("sSL").value = "";
 }
 
 function leftOne(){
