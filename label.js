@@ -46,7 +46,7 @@ function label(a) {
                     if(d == "" && t != "")
                         d = t.substr(2);  
                 }
-                        
+                 s = this.extract(n,"S");       
             }//Custom
             if (intProfile == 2) {//Bortech
                 n = n.toUpperCase();
