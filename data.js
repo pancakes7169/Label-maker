@@ -3,7 +3,7 @@
 
 var venderListDate = "v04.21"; //Updated 5.31
 var venderList = [
-  [0,"Vender","Supplier","0"],
+  [0,"Vender","Supplier"],
   [0,338925,"4 Star Electronics"],
   [0,337033,"ACI INDUSTRIES"],
   [0,335654,"ACUMENT (formelry CARMCAR LLC) (Belvedere)"],
@@ -200,10 +200,11 @@ var venderList = [
   [0,353382,"Yoder Industries"]
 ];
 
-var weightListDate = "v04.21"; //Updated 10.5
+var weightListDate = "v05.28.21"; //Updated 10.5
 var weightList = [
   ["Same","Part Number","Qty","Vender","Weight"],
-  [0,"2.84105E+12",162,"Metal Technology",500],
+  [0,"A2C7634780100",1920,"Neuman Aluminam",250],
+  [0,"2841053700100",162,"Metal Technology",500],
   [1,"2841074301100",128,"Nedec",450],
   [1,"2841074301100",192,"Twin City",550],
   [0,"2841100300100",1920,"Delphi",400],
@@ -348,7 +349,7 @@ var weightList = [
   [0,"A2C7501830000",312,"Nedec",450],
   [0,"A2C7502110000",408,"TRO Manufacturing",350],
   [0,"A2C7504280000",96,"CSABA METAL",0],
-  [0,"A2C7539870000",180,"Yoder",700],
+  [0,"A2C7539870000",240,"Yoder",700],
   [0,"A2C7539880000",600,"TRO Manufacturing ",500],
   [0,"A2C7553950000",336,"Trend Tech.",125],
   [0,"A2C7553970000",336,"Trend Tech.",125],
@@ -380,8 +381,15 @@ var weightList = [
   [0,"A2C9519150000",1280,"Molex",400],
   [0,"A2C9519200000",1280,"Molex",420],
   [0,"A2C9953410100",5120,"Molex",400],
-  [0,"A2C1794160000",5400,"Trend Tech.",250],
-  [0,"A2C1028810000",5760,"Walter Soehner",300]
+  [0,"A2C1794160000",10800,"Trend Tech.",250],
+  [0,"A2C1028810000",5760,"Walter Soehner",300],
+  [0,"A2C9836700000",300000,"Ramf",661],
+  [0,"A2C7686350100",2376,"Nifco",250],
+  [0,"A2C7727160100",864,"Nifco",250],
+  [0,"A2C7727170100",864,"Nifco",250],
+  [0,"A2C7746440200",864,"Nifco",250],
+  [0,"A2C3026300000",2016,"EPT",200],
+  [0,"A2C7541720100",1152,"Molex",300]
 ];
 
 var kanbanDate = "v04.21"; //Updated
