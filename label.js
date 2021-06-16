@@ -249,7 +249,7 @@ function label(a) {
         a[12] = " " + (index+1);
     	a[13] = "^FS\n";
 		a[14] = "\n^FO75,60^AQR36,20^FDSUID" + this.cutFront(s,1);
-		a[15] = "^FS\n^FO20,60^BY2,3.0,10^BCR,55,N,N,N^FDS" + s;
+		a[15] = "^FS\n^FO20,60^BY2,3.0,10^BCR,55,N,N,N^FDS" + this.cutFront(s,1);
         a[16] = "\n^FO30,600^BXR,3,200,48,48,~^FD\n" + m + "^FS";
         a[17] = "\n^XZ";
 		if (s == ""){
